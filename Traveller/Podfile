@@ -1,0 +1,32 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'Traveller' do
+  # Comment the next line if you don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for Traveller
+    pod 'IQKeyboardManagerSwift'
+    pod 'SwiftyUserDefaults'
+    pod 'Kingfisher','4.9.0'
+    pod 'Alamofire','4.9.1'
+    pod 'SwiftyJSON'
+    pod 'Toast-Swift'
+    pod 'MBProgressHUD'
+    pod 'AlamofireImage', '~> 3.3'
+    pod 'KAPinField'
+    pod 'DLRadioButton'
+    pod 'SKCountryPicker'
+    pod 'GooglePlaces','4.1.0'
+    pod 'ActionSheetPicker-3.0'
+    pod 'Cosmos'
+    pod 'BEMCheckBox'
+    
+    pod 'Firebase/Messaging' # for chat
+    pod 'Firebase/Firestore'
+    pod 'Firebase/Database' # for push notification
+    #for use firebase storage
+    pod 'Firebase/Storage'
+    pod 'VisualEffectView'
+    
+end

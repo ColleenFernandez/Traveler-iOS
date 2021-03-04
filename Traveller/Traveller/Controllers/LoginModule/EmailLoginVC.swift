@@ -40,15 +40,28 @@ class EmailLoginVC: BaseVC {
             return
         }else{
             self.showLoadingView(vc: self)
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+            ApiManager.signin(email: email, password: password) { (isSuccess, data) in
+                self.hideLoadingView()
+                if isSuccess{
+                    self.gotoTabControllerWithIndex(0)
+                }else{
+                    if let msg = data as? String{
+                        self.showAlerMessage(message: msg)
+                    }
+                }
+            }
+            /**DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                 self.hideLoadingView()
                 self.gotoTabControllerWithIndex(0)
-            }
+            }*/
         }
     }
     
     @IBAction func backBtnClicked(_ sender: Any) {
         //self.navigationController?.popViewController(animated: true)
         self.gotoVC("LoginVCNav")
+    }
+    @IBAction func forgotBtnClicked(_ sender: Any) {
+        self.gotoNavPresent("ForgotVC", fullscreen: true)
     }
 }

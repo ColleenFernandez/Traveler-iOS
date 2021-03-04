@@ -49,6 +49,7 @@ class SignUpVC: BaseVC {
     var confirmpassword = ""
     var user_gender: String?
     var imagePicker: ImagePicker1!
+    var birthday_timestamp: Int = 0
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -106,6 +107,11 @@ class SignUpVC: BaseVC {
         password = self.edt_pwd.text ?? ""
         confirmpassword = self.edt_confirmpwd.text ?? ""
         
+        if imageFils.count == 0{
+            self.showToast("Please select your user photo")
+            return
+        }
+        
         if first_name.isEmpty{
             self.showToast("Please input your first name")
             return
@@ -123,14 +129,14 @@ class SignUpVC: BaseVC {
             self.showToast("Please input your valid email")
             return
         }
-        if birthday.isEmpty{
+        if birthday_timestamp == 0{
             self.showToast("Please input your birthday")
             return
         }
-        if phonenumber.isEmpty{
-            self.showToast("Please input your phone number")
-            return
-        }
+//        if phonenumber.isEmpty{
+//            self.showToast("Please input your phone number")
+//            return
+//        }
         if password.isEmpty{
             self.showToast("Please input your password")
             return
@@ -146,33 +152,21 @@ class SignUpVC: BaseVC {
         
         else{
             self.showLoadingView(vc: self)
-            
-            self.country_code = self.lbl_countryCode.text ?? ""
-            /*ApiManager.signup(user_name: usertName, email: useremail, password: password, user_photo: imageFils.first ?? "", user_location: userLocation, latitude: self.latitude, longitude: self.longitude){ (isSuccess, data) in
+            //self.country_code = self.lbl_countryCode.text ?? ""
+            self.showLoadingView(vc: self)
+            ApiManager.signup(user_email: email, first_name: first_name, last_name: last_name, user_photo: imageFils.first ?? "", birthday: birthday_timestamp, phone_number: "", login_type: .email, password: password) { (isSuccess, data) in
                 self.hideLoadingView()
                 if isSuccess{
-                    //let dict = JSON (data as Any)
-                    UserDefault.setBool(key: PARAMS.LOGOUT, value: false)
-                    self.gotoNavPresent("PetRegisterVC", fullscreen: true)
+                    self.gotoTabControllerWithIndex(0)
                 }else{
-                    if let data = data{
-                        let statue = data  as! Int
-                        if statue == 201{
-                            self.showAlerMessage(message: Messages.USER_EMAIL_EXIST)
-                        }else if statue == 202{
-                            self.showAlerMessage(message: Messages.IMAGE_UPLOAD_FAIL)
-                        }else {
-                            self.showAlerMessage(message: Messages.NETISSUE)
-                        }
-                        
-                    }else{
-                        self.showAlerMessage(message: Messages.NETISSUE)
+                    if let messagge = data as? String{
+                        self.showAlerMessage(message: messagge)
                     }
                 }
-            }*/
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                self.gotoTabControllerWithIndex(0)
             }
+            /*DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                self.gotoTabControllerWithIndex(0)
+            }*/
         }
     }
     
@@ -184,8 +178,16 @@ class SignUpVC: BaseVC {
     @IBAction func birthdayBtnClicked(_ sender: Any) {
         let datePicker = ActionSheetDatePicker(title:"Select your birthday", datePickerMode: UIDatePicker.Mode.date, selectedDate: NSDate() as Date?, doneBlock: {
             picker, value, index in
+            
             if let datee = value as? Date{
-                self.edt_birthday.text = getStrDate("\(Int(datee.timeIntervalSince1970) * 1000)", format: "MM/dd/yyyy")
+                if  Int(NSDate().timeIntervalSince1970 * 1000) - Int(datee.timeIntervalSince1970) * 1000 <= Constants.ONE_YEAR_TIMESTAMP * 1{
+                    self.birthday_timestamp = 0
+                    self.showAlerMessage(message: "Please select your correct birthday!")
+                    return
+                }else{
+                    self.birthday_timestamp = Int(datee.timeIntervalSince1970) * 1000
+                    self.edt_birthday.text = getStrDate("\(Int(datee.timeIntervalSince1970) * 1000)", format: "MM/dd/yyyy")
+                }
             }
             return
         }, cancel: { ActionStringCancelBlock in return }, origin: (sender as AnyObject).superview!.superview)

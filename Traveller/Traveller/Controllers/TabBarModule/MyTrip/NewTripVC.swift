@@ -18,6 +18,7 @@ class NewTripVC: BaseVC {
     @IBOutlet weak var edt_time: UITextField!
     @IBOutlet weak var edt_weight: UITextField!
     @IBOutlet weak var edt_price: UITextField!
+    @IBOutlet weak var txv_additionalinformation: UITextView!
     
     @IBOutlet weak var cus_document: BEMCheckBox!
     @IBOutlet weak var cus_medicine: BEMCheckBox!
@@ -33,8 +34,9 @@ class NewTripVC: BaseVC {
     @IBOutlet weak var cus_shoes: BEMCheckBox!
     
     var selected_field = 0 // 1: from 2: to
-    var start_timestamp: Int = 0
-    var end_timestamp: Int = 0
+    var date_timestamp: Int?
+    var start_timestamp: Int?
+    var check_boxs = [BEMCheckBox]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,7 +47,7 @@ class NewTripVC: BaseVC {
         removeNavbarTopLine()
         self.navigationItem.title = "New Trip"
         editInit()
-        let check_boxs: [BEMCheckBox] = [cus_document, cus_medicine, cus_makeup,cus_money, cus_food, cus_mobile,  cus_laptop, cus_electroinics, cus_books, cus_toys,   cus_clothes,cus_shoes]
+        check_boxs = [cus_document, cus_medicine, cus_makeup,cus_money, cus_food, cus_mobile,  cus_laptop, cus_electroinics, cus_books, cus_toys,   cus_clothes,cus_shoes]
         for one in check_boxs{
             setCheckBox(one, checked: false)
         }
@@ -91,13 +93,21 @@ class NewTripVC: BaseVC {
     }
     
     @IBAction func btnStartDateClicked(_ sender: Any) {
-        let datePicker = ActionSheetDatePicker(title:"Select date", datePickerMode: UIDatePicker.Mode.date, selectedDate: NSDate() as Date?, doneBlock: {
+        
+        let datePicker = ActionSheetDatePicker(title:"Select start date", datePickerMode: UIDatePicker.Mode.date, selectedDate: NSDate() as Date?, doneBlock: {
             picker, value, index in
-            if let local_time = utcToLocal(dateStr: "\(value ?? "")"){
-                self.edt_date.text = String(local_time.split(separator: " ")[0])
-            }
+            
             if let datee = value as? Date{
-                self.start_timestamp = Int(datee.timeIntervalSince1970) * 1000
+                if  Int(NSDate().timeIntervalSince1970 * 1000) > Int(datee.timeIntervalSince1970) * 1000 + Constants.ONE_HOUR_TIMESTAMP{
+                    self.edt_date.text = ""
+                    self.showAlerMessage(message: "Please select correct start date!")
+                    return
+                }else{
+                    self.date_timestamp = Int(datee.timeIntervalSince1970) * 1000
+                    if let local_time = utcToLocal(dateStr: "\(value ?? "")"){
+                        self.edt_date.text = String(local_time.split(separator: " ")[0])
+                    }
+                }
             }
             return
         }, cancel: { ActionStringCancelBlock in return }, origin: (sender as AnyObject).superview!.superview)
@@ -106,13 +116,31 @@ class NewTripVC: BaseVC {
     }
     
     @IBAction func btnEndDateClicked(_ sender: Any) {
-        let datePicker = ActionSheetDatePicker(title:"Select time", datePickerMode: UIDatePicker.Mode.time, selectedDate: NSDate() as Date?, doneBlock: {
+        let datePicker = ActionSheetDatePicker(title:"Select start time", datePickerMode: UIDatePicker.Mode.time, selectedDate: NSDate() as Date?, doneBlock: {
             picker, value, index in
-            if let local_time = utcToLocal(dateStr: "\(value ?? "")"){
-                self.edt_time.text = String(local_time.split(separator: " ")[1]) + " " + String(local_time.split(separator: " ")[2])
-            }
+            
             if let datee = value as? Date{
-                self.end_timestamp = Int(datee.timeIntervalSince1970) * 1000
+                if let date_timestamp = self.date_timestamp{
+                    if date_timestamp - Int(NSDate().timeIntervalSince1970) * 1000 <= Constants.ONE_DAY_TIMESTAMP - Constants.ONE_HOUR_TIMESTAMP{
+                        if  Int(datee.timeIntervalSince1970) * 1000 - Int(NSDate().timeIntervalSince1970 * 1000) <= Constants.ONE_HOUR_TIMESTAMP - Constants.ONE_MIN_TIMESTAMP{
+                            
+                            self.edt_time.text = ""
+                            self.showAlerMessage(message: "Please select correct start time. Time must be 1 hour later from now at least!")
+                            return
+                        }else{
+                            self.start_timestamp = Int(datee.timeIntervalSince1970) * 1000
+                            if let local_time = utcToLocal(dateStr: "\(value ?? "")"){
+                                self.edt_time.text = String(local_time.split(separator: " ")[1]) + " " + String(local_time.split(separator: " ")[2])
+                            }
+                        }
+                    }else{
+                        let timediff = Int(NSDate().timeIntervalSince1970) * 1000 - Int(datee.timeIntervalSince1970) * 1000
+                        self.start_timestamp = date_timestamp - timediff
+                        if let local_time = utcToLocal(dateStr: "\(value ?? "")"){
+                            self.edt_time.text = String(local_time.split(separator: " ")[1]) + " " + String(local_time.split(separator: " ")[2])
+                        }
+                    }
+                }
             }
             return
         }, cancel: { ActionStringCancelBlock in return }, origin: (sender as AnyObject).superview!.superview)
@@ -137,20 +165,69 @@ class NewTripVC: BaseVC {
     }
     
     @IBAction func saveBtnClicked(_ sender: Any) {
-        self.showLoadingView(vc: self)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        let from_location = edt_flyingfrom.text ?? ""
+        let to_location = edt_flyingto.text ?? ""
+        let weight = edt_weight.text ?? ""
+        let price = edt_price.text ?? ""
+        let date = edt_date.text ?? ""
+        let time = edt_time.text ?? ""
+        let des = txv_additionalinformation.text ?? ""
+        var items = [String]()
+        for i in 0 ..< check_boxs.count{
+            if check_boxs[i].on{
+                items.append(Constants.items[i])
+            }
+        }
+        if from_location.isEmpty{
+            self.showAlerMessage(message: "Please select flying from location.")
+            return
+        }
+        if to_location.isEmpty{
+            self.showAlerMessage(message: "Please select flying to location.")
+            return
+        }
+        if date.isEmpty{
+            self.showAlerMessage(message: "Please select start date.")
+            return
+        }
+        if time.isEmpty{
+            self.showAlerMessage(message: "Please select start time.")
+            return
+        }
+        
+        if weight.isEmpty{
+            self.showAlerMessage(message: "Please input weight.")
+            return
+        }
+        if price.isEmpty{
+            self.showAlerMessage(message: "Please input price.")
+            return
+        }
+        if items.count == 0{
+            self.showAlerMessage(message: "Please selct bring items.")
+            return
+        }else{
+            self.showLoadingView(vc: self)
+            ApiManager.createTravel(travel_time: self.start_timestamp ?? Int(NSDate().timeIntervalSince1970 * 1000), weight: weight.toFloat() ?? 0.0, price: price.toInt() ?? 0, items: items.joined(separator: ","), des: des, from_location: from_location, to_location: to_location) { (isSuccess, data) in
+                self.hideLoadingView()
+                if isSuccess{
+                    self.navigationController?.popViewController(animated: true)
+                }
+            }
+        }
+        /**DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.hideLoadingView()
             self.navigationController?.popViewController(animated: true)
-        }
+        }*/
     }
 }
 
 extension NewTripVC : GMSAutocompleteViewControllerDelegate {
   func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
     if selected_field == 1{
-        edt_flyingfrom.text = place.name
+        edt_flyingfrom.text = place.formattedAddress
     }else if selected_field == 2{
-        edt_flyingto.text = place.name
+        edt_flyingto.text = place.formattedAddress
     }else{
         print("default")
     }

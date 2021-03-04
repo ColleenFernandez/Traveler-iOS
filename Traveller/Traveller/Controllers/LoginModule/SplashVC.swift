@@ -34,21 +34,31 @@ class SplashVC: BaseVC {
     func checkBackgrouond(){
         if thisuser.isValid{
             if !UserDefault.getBool(key: PARAMS.LOGOUT, defaultValue: false){
-                self.showLoadingView(vc: self)
-                /*ApiManager.signin(email: thisuser.user_email ?? "", password: thisuser.password ?? "") { (isSuccess, data) in
-                    self.hideLoadingView()
-                    if isSuccess{
-                        UserDefault.setBool(key: PARAMS.LOGOUT, value: false)
-                        self.gotoTabControllerWithIndex(0)
-                    }else{
-                        self.gotoVC("LoginNav")
+                if thisuser.login_type == .email{
+                    self.showLoadingView(vc: self)
+                    ApiManager.signin(email: thisuser.user_email ?? "", password: thisuser.password ?? "") { (isSuccess, data) in
+                        self.hideLoadingView()
+                        if isSuccess{
+                            self.gotoTabControllerWithIndex(0)
+                        }else{
+                            self.gotoVC("LoginVCNav")
+                        }
                     }
-                }*/
-                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    self.hideLoadingView()
-                    self.gotoVC("LoginVCNav")
+                }else{
+                    self.showLoadingView(vc: self)
+                    ApiManager.socialLogin(email: thisuser.user_email ?? "", first_name: thisuser.first_name ?? "", last_name: thisuser.last_name ?? "", user_photo: thisuser.user_photo ?? "", login_type: thisuser.login_type ?? .google, social_id: thisuser.password ?? "", completion: { (isSuccess, data) in
+                        if isSuccess{
+                            self.gotoTabControllerWithIndex(0)
+                        }else{
+                            self.gotoVC("LoginVCNav")
+                        }
+                    })
                 }
                 
+                /**DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    self.hideLoadingView()
+                    self.gotoVC("LoginVCNav")
+                }*/
             }else{
                 self.gotoVC("LoginVCNav")
             }

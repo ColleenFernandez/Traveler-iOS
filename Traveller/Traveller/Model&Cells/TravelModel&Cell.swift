@@ -13,7 +13,7 @@ import Cosmos
 class TravelModel: NSObject {
     var travel_id: Int!
     var usermodel: UserModel?
-    var travel_time: Int64?
+    var travel_time: Int?
     var weight: Float?
     var price: Int?
     var items: [String]?
@@ -34,7 +34,7 @@ class TravelModel: NSObject {
         to_location = nil
     }
     
-    init(travel_id: Int, usermodel: UserModel, travel_time: Int64, weight: Float, price: Int, items: [String], des: String, from_location: String, to_location: String){
+    init(travel_id: Int, usermodel: UserModel, travel_time: Int, weight: Float, price: Int, items: [String], des: String, from_location: String, to_location: String){
         self.travel_id = travel_id
         self.usermodel = usermodel
         self.travel_time = travel_time
@@ -44,6 +44,23 @@ class TravelModel: NSObject {
         self.des = des
         self.from_location = from_location
         self.to_location = to_location
+    }
+    
+    init(_ json: JSON){
+        self.travel_id = json[PARAMS.TRAVEL_ID].intValue
+        self.usermodel = UserModel(json)
+        self.travel_time = json[PARAMS.TRAVEL_TIME].intValue
+        self.weight = json[PARAMS.WEIGHT].floatValue
+        self.price = json[PARAMS.PRICE].intValue
+        let items = json[PARAMS.ITEMS].stringValue.split{ !$0.isLetter }
+        self.items = [String]()
+        self.items?.removeAll()
+        for one in items{
+            self.items?.append(String(one))
+        }
+        self.des = json[PARAMS.DES].stringValue
+        self.from_location = json[PARAMS.FROM_LOCATION].stringValue
+        self.to_location = json[PARAMS.TO_LOCATION].stringValue
     }
 }
 
@@ -74,7 +91,7 @@ class TravelCell: UITableViewCell{
             self.lbl_firstname.text = one.usermodel?.first_name
             self.cus_rating.rating = Double(one.usermodel?.rating ?? 0.0)
         }
-        self.lbl_date.text = getWeekAndDateTimeFromTmp(one.travel_time ?? Int64(NSDate().timeIntervalSince1970 * 1000))
+        self.lbl_date.text = getWeekAndDateTimeFromTmp(Int64(one.travel_time ?? Int(NSDate().timeIntervalSince1970 * 1000)))
         self.lbl_weight.text = "\(one.weight ?? 0.0)"
         self.lbl_price.text = "\(one.price ?? 0)"
         

@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-public let PLACE_API_KEY = "AIzaSyCTfz1-gFrsvKiYyQsV9_m45dz9TPdQzHA"
+public let PLACE_API_KEY = "AIzaSyD5eBj9SeVQLGAqtG2Z4QW3sxAKIpI7ve4"
 
 struct Messages {
 
@@ -15,6 +15,13 @@ struct Constants {
     static let TERMS_LINK    = "http://mofutomo.com/terms.pdf"
     static let PRIVACY_LINK    = "http://mofutomo.com/privacy.pdf"
     static let items = ["Document", "Medicine", "Makeup", "Money", "Food", "Mobile", "Laptop", "Electronics", "Books", "Toys", "Clothes", "Shoes"]
+    static let ONE_MIN_TIMESTAMP      = 60 * 1000
+    static let ONE_HOUR_TIMESTAMP      = 3600 * 1000
+    static let ONE_DAY_TIMESTAMP      = 86400 * 1000
+    static let ONE_WEEK_TIMESTAMP      = 604800 * 1000
+    static let ONE_MONTH_TIMESTAMP      = 2629743 * 1000
+    static let ONE_YEAR_TIMESTAMP      = 31556926 * 1000
+    static let CLIENT_ID    = "491391337775-gjr5p6otsu0vqlmdgumt4c20qrgaefet.apps.googleusercontent.com"
 }
 
 struct COLORS {

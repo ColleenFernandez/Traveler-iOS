@@ -20,8 +20,6 @@ class ChatVC: BaseVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
                 layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
         layout.itemSize = CGSize(width: Constants.SCREEN_WIDTH, height: 100)
@@ -41,8 +39,12 @@ class ChatVC: BaseVC {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.navigationItem.title = "Chat"
-        let roomid = "u" + meid
-        self.userlistListner(roomid)
+        if thisuser.isValid{
+            let roomid = "u" + meid
+            self.userlistListner(roomid)
+        }else{
+            self.showLoginAlert()
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -141,10 +143,10 @@ extension ChatVC : UICollectionViewDelegate, UICollectionViewDataSource{
         cell.entity = self.ds_allChats[indexPath.row]
         //cell.delegate = self
         //cell.addBlurToView()
-        let leftSwipe = MySwipeGesture(target: self, action: #selector(handleSwipeLeft(_:)))
-        leftSwipe.direction = .left
-        leftSwipe.cell = cell
-        cell.addGestureRecognizer(leftSwipe)
+        //let leftSwipe = MySwipeGesture(target: self, action: #selector(handleSwipeLeft(_:)))
+        //leftSwipe.direction = .left
+        //leftSwipe.cell = cell
+        //cell.addGestureRecognizer(leftSwipe)
         cell.btn_spaceBtn.tag = indexPath.row
         cell.btn_delete.tag = indexPath.row
         cell.btn_decline.tag = indexPath.row

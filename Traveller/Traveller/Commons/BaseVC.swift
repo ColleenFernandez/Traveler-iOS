@@ -11,6 +11,7 @@ import SwiftyUserDefaults
 import SwiftyJSON
 import MBProgressHUD
 import Foundation
+import IQKeyboardManagerSwift
 
 class DarkVC: BaseVC {
     override func viewDidLoad() {
@@ -26,6 +27,7 @@ class BaseVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        IQKeyboardManager.shared.enable = true
         hideKeyboardWhenTappedAround()
     }
     
@@ -35,6 +37,18 @@ class BaseVC: UIViewController {
         }
     }
    
+    func showLoginAlert() {
+        let alertController = UIAlertController(title: nil, message: "Please login to use this feature!", preferredStyle: .alert)
+        let action1 = UIAlertAction(title: "OK", style: .default) { (action:UIAlertAction) in
+            self.gotoVC("LoginVCNav")
+        }
+        let action2 = UIAlertAction(title: "Cancel", style: .default) { (action:UIAlertAction) in
+            
+        }
+        alertController.addAction(action1)
+        alertController.addAction(action2)
+        self.present(alertController, animated: true, completion: nil)
+    }
     
     func showNavBar() {
         self.navigationController?.setNavigationBarHidden(false, animated: false)

@@ -28,5 +28,7 @@ target 'Traveller' do
     #for use firebase storage
     pod 'Firebase/Storage'
     pod 'VisualEffectView'
-    
+    pod 'GoogleSignIn'
+    pod 'FacebookCore'
+    pod 'FBSDKLoginKit'
 end

@@ -9,6 +9,8 @@ import UIKit
 import IQKeyboardManagerSwift
 import GooglePlaces
 import FirebaseCore
+import FBSDKCoreKit
+import GoogleSignIn
 
 var thisuser:UserModel!
 var deviceTokenString: String?
@@ -22,24 +24,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.enableAutoToolbar = false
         
         GMSPlacesClient.provideAPIKey(PLACE_API_KEY)
+
         FirebaseApp.configure()
         
         thisuser = UserModel()
         thisuser.loadUserInfo()
-        
-        thisuser.user_id = 100
-        thisuser.first_name = "Adam"
-        thisuser.last_name = "Errikson"
-        thisuser.birthday = 620129575
-        thisuser.user_email = "adam@gmail.com"
-        thisuser.user_photo = "https://i.pinimg.com/236x/5d/34/a7/5d34a7134293e8db3cd95410269ce63d.jpg"
-        thisuser.rating = 4.5
-        thisuser.phone_number = "18605312109"
-        thisuser.password = "12345"
-        
         thisuser.saveUserInfo()
         UserDefault.Sync()
-        
+        // for google signin
+        GIDSignIn.sharedInstance().clientID = Constants.CLIENT_ID
         return true
     }
 

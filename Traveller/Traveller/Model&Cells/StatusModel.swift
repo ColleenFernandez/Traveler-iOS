@@ -15,11 +15,9 @@ class StatusModel {
     
     
     init(online : String,sender_id : String, timesVal : String) {
-        
         self.online = online
         self.sender_id = sender_id
         self.timesVal = timesVal
-        
     }
     
     init() {

@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>738696638235-d5dfg5alktc1nnpv2tfup9ok1v143c34.apps.googleusercontent.com</string>
+	<string>897454567246-p2g1dteome4e14mri6o28vddgnjdephp.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.738696638235-d5dfg5alktc1nnpv2tfup9ok1v143c34</string>
+	<string>com.googleusercontent.apps.897454567246-p2g1dteome4e14mri6o28vddgnjdephp</string>
 	<key>API_KEY</key>
-	<string>AIzaSyDeVXEGtffNL0OhTGUnlgXzRg6dRi87crI</string>
+	<string>AIzaSyD0UtC2bNqQs2FtV1RFdAzP7bANfRXrxUo</string>
 	<key>GCM_SENDER_ID</key>
-	<string>738696638235</string>
+	<string>897454567246</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.james.aus.Aus</string>
+	<string>com.samer.alzeer1</string>
 	<key>PROJECT_ID</key>
-	<string>traveler-51e9f</string>
+	<string>teleship-164b2</string>
 	<key>STORAGE_BUCKET</key>
-	<string>traveler-51e9f.appspot.com</string>
+	<string>teleship-164b2.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:738696638235:ios:880388c48dfb1626d6edbe</string>
+	<string>1:897454567246:ios:f1e1ec13f0e4971637781f</string>
 </dict>
 </plist>

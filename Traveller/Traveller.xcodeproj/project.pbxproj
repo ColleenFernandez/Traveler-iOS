@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		051ED88325DC47C400B34D08 /* EmailLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051ED88225DC47C400B34D08 /* EmailLoginVC.swift */; };
-		0530E15225DA4F53008765F2 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0530E15125DA4F53008765F2 /* GoogleService-Info.plist */; };
 		0530E15525DA5005008765F2 /* MessageSendVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0530E15425DA5005008765F2 /* MessageSendVC.swift */; };
 		0530E17E25DA5372008765F2 /* AllChatModel&Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0530E17D25DA5372008765F2 /* AllChatModel&Cell.swift */; };
 		0530E1A825DA79FB008765F2 /* UIView+Blur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0530E1A725DA79FB008765F2 /* UIView+Blur.swift */; };
@@ -19,6 +18,9 @@
 		05497C1725D5376200C13F9D /* ChatVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05497C1625D5376200C13F9D /* ChatVC.swift */; };
 		05497C1A25D5376D00C13F9D /* RatingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05497C1925D5376D00C13F9D /* RatingVC.swift */; };
 		05497C1D25D5377900C13F9D /* ProfileVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05497C1C25D5377900C13F9D /* ProfileVC.swift */; };
+		054B8C1C25ED7B1800A1DFAD /* RateUserVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054B8C1B25ED7B1800A1DFAD /* RateUserVC.swift */; };
+		055A06CF25EEB77A0093F413 /* ForgotVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055A06CE25EEB77A0093F413 /* ForgotVC.swift */; };
+		055A06D325EF888F0093F413 /* MyTripDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 055A06D225EF888F0093F413 /* MyTripDetail.swift */; };
 		057AE4A625DC1D0C00DF3850 /* ReviewModel&Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 057AE4A525DC1D0C00DF3850 /* ReviewModel&Cell.swift */; };
 		057D712225D46C22001C4250 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 057D712125D46C22001C4250 /* AppDelegate.swift */; };
 		057D712425D46C22001C4250 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 057D712325D46C22001C4250 /* SceneDelegate.swift */; };
@@ -63,14 +65,15 @@
 		057D71A625D4D2E1001C4250 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 057D71A125D4D2E1001C4250 /* SignUpVC.swift */; };
 		057D71A725D4D2E1001C4250 /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 057D71A225D4D2E1001C4250 /* SplashVC.swift */; };
 		0598DF0E25D64E0B00B85BEC /* TripDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0598DF0D25D64E0B00B85BEC /* TripDetailVC.swift */; };
+		05CBF5DA25ECDECA00FFAF44 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 05CBF5D925ECDECA00FFAF44 /* GoogleService-Info.plist */; };
 		05DB517925D56E10001E1481 /* TravelModel&Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05DB517825D56E10001E1481 /* TravelModel&Cell.swift */; };
 		05FB121F25DA400F00A79F22 /* NewTripVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05FB121E25DA400F00A79F22 /* NewTripVC.swift */; };
 		66D97C90B7F7504C758A1132 /* Pods_Traveller.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6EEF109C05C4714D1EBE87E /* Pods_Traveller.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		05011BE125EE87B7000C365B /* Traveller.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Traveller.entitlements; sourceTree = "<group>"; };
 		051ED88225DC47C400B34D08 /* EmailLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginVC.swift; sourceTree = "<group>"; };
-		0530E15125DA4F53008765F2 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0530E15425DA5005008765F2 /* MessageSendVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageSendVC.swift; sourceTree = "<group>"; };
 		0530E17D25DA5372008765F2 /* AllChatModel&Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AllChatModel&Cell.swift"; sourceTree = "<group>"; };
 		0530E1A725DA79FB008765F2 /* UIView+Blur.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Blur.swift"; sourceTree = "<group>"; };
@@ -81,6 +84,9 @@
 		05497C1625D5376200C13F9D /* ChatVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatVC.swift; sourceTree = "<group>"; };
 		05497C1925D5376D00C13F9D /* RatingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingVC.swift; sourceTree = "<group>"; };
 		05497C1C25D5377900C13F9D /* ProfileVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileVC.swift; sourceTree = "<group>"; };
+		054B8C1B25ED7B1800A1DFAD /* RateUserVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RateUserVC.swift; sourceTree = "<group>"; };
+		055A06CE25EEB77A0093F413 /* ForgotVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ForgotVC.swift; sourceTree = "<group>"; };
+		055A06D225EF888F0093F413 /* MyTripDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTripDetail.swift; sourceTree = "<group>"; };
 		057AE4A525DC1D0C00DF3850 /* ReviewModel&Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ReviewModel&Cell.swift"; sourceTree = "<group>"; };
 		057D711E25D46C22001C4250 /* Traveller.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Traveller.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		057D712125D46C22001C4250 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -127,6 +133,7 @@
 		057D71A125D4D2E1001C4250 /* SignUpVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		057D71A225D4D2E1001C4250 /* SplashVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
 		0598DF0D25D64E0B00B85BEC /* TripDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailVC.swift; sourceTree = "<group>"; };
+		05CBF5D925ECDECA00FFAF44 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		05DB517825D56E10001E1481 /* TravelModel&Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TravelModel&Cell.swift"; sourceTree = "<group>"; };
 		05FB121E25DA400F00A79F22 /* NewTripVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTripVC.swift; sourceTree = "<group>"; };
 		94E7FE73B18AA839431C024E /* Pods-Traveller.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Traveller.debug.xcconfig"; path = "Target Support Files/Pods-Traveller/Pods-Traveller.debug.xcconfig"; sourceTree = "<group>"; };
@@ -173,6 +180,7 @@
 			children = (
 				05497C1325D5375700C13F9D /* MyTripVC.swift */,
 				05FB121E25DA400F00A79F22 /* NewTripVC.swift */,
+				055A06D225EF888F0093F413 /* MyTripDetail.swift */,
 			);
 			path = MyTrip;
 			sourceTree = "<group>";
@@ -190,6 +198,7 @@
 			isa = PBXGroup;
 			children = (
 				05497C1925D5376D00C13F9D /* RatingVC.swift */,
+				054B8C1B25ED7B1800A1DFAD /* RateUserVC.swift */,
 			);
 			path = Rating;
 			sourceTree = "<group>";
@@ -223,6 +232,7 @@
 		057D712025D46C22001C4250 /* Traveller */ = {
 			isa = PBXGroup;
 			children = (
+				05011BE125EE87B7000C365B /* Traveller.entitlements */,
 				057D714225D4BC9D001C4250 /* Application */,
 				057D714925D4BCF3001C4250 /* Controllers */,
 				057D714A25D4BCFD001C4250 /* Utils */,
@@ -232,7 +242,7 @@
 				057D714525D4BCC2001C4250 /* StoryBoards&Assests */,
 				057D714425D4BCB9001C4250 /* View */,
 				057D712F25D46C23001C4250 /* Info.plist */,
-				0530E15125DA4F53008765F2 /* GoogleService-Info.plist */,
+				05CBF5D925ECDECA00FFAF44 /* GoogleService-Info.plist */,
 			);
 			path = Traveller;
 			sourceTree = "<group>";
@@ -346,6 +356,7 @@
 				057D71A125D4D2E1001C4250 /* SignUpVC.swift */,
 				057D71A225D4D2E1001C4250 /* SplashVC.swift */,
 				051ED88225DC47C400B34D08 /* EmailLoginVC.swift */,
+				055A06CE25EEB77A0093F413 /* ForgotVC.swift */,
 			);
 			path = LoginModule;
 			sourceTree = "<group>";
@@ -428,7 +439,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				057D712E25D46C23001C4250 /* LaunchScreen.storyboard in Resources */,
-				0530E15225DA4F53008765F2 /* GoogleService-Info.plist in Resources */,
+				05CBF5DA25ECDECA00FFAF44 /* GoogleService-Info.plist in Resources */,
 				057D712B25D46C23001C4250 /* Assets.xcassets in Resources */,
 				057D712925D46C22001C4250 /* Main.storyboard in Resources */,
 			);
@@ -543,13 +554,16 @@
 				057D717725D4D265001C4250 /* UserDefault.swift in Sources */,
 				057D718225D4D265001C4250 /* NavigationController.swift in Sources */,
 				057AE4A625DC1D0C00DF3850 /* ReviewModel&Cell.swift in Sources */,
+				055A06CF25EEB77A0093F413 /* ForgotVC.swift in Sources */,
 				057D716B25D4D265001C4250 /* Date+Extension.swift in Sources */,
 				057D719225D4D29B001C4250 /* ApiManager.swift in Sources */,
+				054B8C1C25ED7B1800A1DFAD /* RateUserVC.swift in Sources */,
 				057D719B25D4D2C9001C4250 /* UserModel.swift in Sources */,
 				057D717225D4D265001C4250 /* UITableView+Extension.swift in Sources */,
 				057D717C25D4D265001C4250 /* UITextField+Extension.swift in Sources */,
 				0530E1A825DA79FB008765F2 /* UIView+Blur.swift in Sources */,
 				057D718725D4D27F001C4250 /* BaseVC.swift in Sources */,
+				055A06D325EF888F0093F413 /* MyTripDetail.swift in Sources */,
 				057D718425D4D265001C4250 /* DynamicHeightCollectionView.swift in Sources */,
 				057D717B25D4D265001C4250 /* Data+Extension.swift in Sources */,
 				057D717A25D4D265001C4250 /* CommonUtils.swift in Sources */,
@@ -701,6 +715,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Traveller/Traveller.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = X6FG82HC5F;
 				INFOPLIST_FILE = Traveller/Info.plist;
@@ -708,7 +723,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.james.aus.Aus;
+				PRODUCT_BUNDLE_IDENTIFIER = com.samer.alzeer1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -721,6 +736,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Traveller/Traveller.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = X6FG82HC5F;
 				INFOPLIST_FILE = Traveller/Info.plist;
@@ -728,7 +744,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.james.aus.Aus;
+				PRODUCT_BUNDLE_IDENTIFIER = com.samer.alzeer1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

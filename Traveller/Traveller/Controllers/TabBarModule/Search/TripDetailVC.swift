@@ -50,7 +50,7 @@ class TripDetailVC: BaseVC {
                 imv_profile.kf.setImage(with: URL(string: photo), placeholder: UIImage.init(named: "logo"))
             }
             self.lbl_username.text = one.usermodel?.first_name
-            self.lbl_servicetime.text = getWeekAndDateTimeFromTmp(one.travel_time ?? Int64(NSDate().timeIntervalSince1970 * 1000))
+            self.lbl_servicetime.text = getWeekAndDateTimeFromTmp(Int64(one.travel_time ?? Int(NSDate().timeIntervalSince1970 * 1000)))
             self.lbl_weight.text = "\(one.weight ?? 0.0)"
             self.lbl_price.text = "\(one.price ?? 0)"
             self.cus_rating.rating = Double(one.usermodel?.rating ?? 0.0)
@@ -116,80 +116,82 @@ class TripDetailVC: BaseVC {
     }
     
     @IBAction func sendBtnClicked(_ sender: Any) {
-        let msg = self.txv_send_traveler.text
-        if msg!.isEmpty{
-            self.showToast("Please input send text")
-            return
-        }else{
-            if let one = self.one{
-                self.showLoadingView(vc: self)
-                
-                let me_id: String = "\(thisuser.user_id ?? 0)"
-                let partner_id: String = "\(one.usermodel!.user_id ?? 0)"
-                let chatroom_id = thisuser.user_id > one.usermodel!.user_id ? partner_id + "_" +  me_id : me_id + "_" +  partner_id
-                let timeNow = Int(NSDate().timeIntervalSince1970) * 1000
-                var chatObject = [String: String]()
-                // MARK: for message object for partner - chatObject
-                chatObject["message"]     = msg
-                chatObject["photo"]       = thisuser.user_photo
-                chatObject["sender_id"]   = "\(thisuser.user_id ?? 0)"
-                chatObject["time"]        = "\(timeNow)" as String
-                chatObject["name"]        = thisuser.first_name! + " " +  thisuser.last_name!
-                chatObject["image"]       = ""
-                FirebaseAPI.sendMessage(chatObject, chatroom_id) { (status, message) in
-                    if status {
-                        var listObject = [String: String]()
-                        listObject["id"]   = partner_id
-                        // MARK: for list view for my list object - - listobject
-                        listObject["message"]     = msg
-                        listObject["sender_name"]    = one.usermodel!.first_name! + " " +  one.usermodel!.last_name!
-                        listObject["sender_photo"]  = one.usermodel!.user_photo
-                        listObject["time"]           = "\(timeNow)" as String
-                        
-                        
-                        FirebaseAPI.sendListUpdate(listObject, "u" + me_id, partnerid: "u" + partner_id){
-                            (status,message) in
-                            if status{
-                                var listObject1 = [String: String]()
-                                // MARK:  for list view for partner's list object - listobject1
-                                listObject1["id"]              = me_id
-                                listObject1["message"]          = msg
-                                listObject1["sender_name"]     = thisuser.first_name! + " " + thisuser.last_name!
-                                listObject1["sender_photo"]    = thisuser.user_photo
-                                listObject1["time"]            = "\(timeNow)" as String
-                               
-                                /**if !online{
+        if thisuser.isValid{
+            let msg = self.txv_send_traveler.text
+            if msg!.isEmpty{
+                self.showToast("Please input send text")
+                return
+            }else{
+                if let one = self.one{
+                    self.showLoadingView(vc: self)
+                    
+                    let me_id: String = "\(thisuser.user_id ?? 0)"
+                    let partner_id: String = "\(one.usermodel!.user_id ?? 0)"
+                    let chatroom_id = thisuser.user_id > one.usermodel!.user_id ? partner_id + "_" +  me_id : me_id + "_" +  partner_id
+                    let timeNow = Int(NSDate().timeIntervalSince1970) * 1000
+                    var chatObject = [String: String]()
+                    // MARK: for message object for partner - chatObject
+                    chatObject["message"]     = msg
+                    chatObject["photo"]       = thisuser.user_photo
+                    chatObject["sender_id"]   = "\(thisuser.user_id ?? 0)"
+                    chatObject["time"]        = "\(timeNow)" as String
+                    chatObject["name"]        = thisuser.first_name! + " " +  thisuser.last_name!
+                    chatObject["image"]       = ""
+                    FirebaseAPI.sendMessage(chatObject, chatroom_id) { (status, message) in
+                        if status {
+                            var listObject = [String: String]()
+                            listObject["id"]   = partner_id
+                            // MARK: for list view for my list object - - listobject
+                            listObject["message"]     = msg
+                            listObject["sender_name"]    = one.usermodel!.first_name! + " " +  one.usermodel!.last_name!
+                            listObject["sender_photo"]  = one.usermodel!.user_photo
+                            listObject["time"]           = "\(timeNow)" as String
+                            
+                            
+                            FirebaseAPI.sendListUpdate(listObject, "u" + me_id, partnerid: "u" + partner_id){
+                                (status,message) in
+                                if status{
+                                    var listObject1 = [String: String]()
+                                    // MARK:  for list view for partner's list object - listobject1
+                                    listObject1["id"]              = me_id
+                                    listObject1["message"]          = msg
+                                    listObject1["sender_name"]     = thisuser.first_name! + " " + thisuser.last_name!
+                                    listObject1["sender_photo"]    = thisuser.user_photo
+                                    listObject1["time"]            = "\(timeNow)" as String
+                                   
+                                    /**if !online{
+                                        FirebaseAPI.sendListUpdate(listObject1, "u" + partner_id, partnerid: "u" + me_id){
+                                            (status,message) in
+                                            if status{
+                                                ApiManager.sendPushNoti(receiver_id: partner_id.toInt()!, message: listObject1["message"]!)
+                                                self.isdosending = false
+                                                if msgtype == .image{
+                                                    self.uiv_postView.isHidden = true
+                                                    self.imageFils.removeAll()
+                                                    self.imv_Post.image = nil
+                                                }
+                                            }
+                                        }
+                                    }else{
+                                        FirebaseAPI.sendListUpdate(listObject1, "u" + partner_id, partnerid: "u" + me_id){
+                                            (status,message) in
+                                            if status{
+                                                self.isdosending = false
+                                                if msgtype == .image{
+                                                    self.uiv_postView.isHidden = true
+                                                    self.imageFils.removeAll()
+                                                    self.imv_Post.image = nil
+                                                }
+                                            }
+                                        }
+                                    }*/
                                     FirebaseAPI.sendListUpdate(listObject1, "u" + partner_id, partnerid: "u" + me_id){
                                         (status,message) in
                                         if status{
-                                            ApiManager.sendPushNoti(receiver_id: partner_id.toInt()!, message: listObject1["message"]!)
-                                            self.isdosending = false
-                                            if msgtype == .image{
-                                                self.uiv_postView.isHidden = true
-                                                self.imageFils.removeAll()
-                                                self.imv_Post.image = nil
-                                            }
+                                            //add action after completion
+                                            self.hideLoadingView()
+                                            self.navigationController?.popViewController(animated: true)
                                         }
-                                    }
-                                }else{
-                                    FirebaseAPI.sendListUpdate(listObject1, "u" + partner_id, partnerid: "u" + me_id){
-                                        (status,message) in
-                                        if status{
-                                            self.isdosending = false
-                                            if msgtype == .image{
-                                                self.uiv_postView.isHidden = true
-                                                self.imageFils.removeAll()
-                                                self.imv_Post.image = nil
-                                            }
-                                        }
-                                    }
-                                }*/
-                                FirebaseAPI.sendListUpdate(listObject1, "u" + partner_id, partnerid: "u" + me_id){
-                                    (status,message) in
-                                    if status{
-                                        //add action after completion
-                                        self.hideLoadingView()
-                                        self.navigationController?.popViewController(animated: true)
                                     }
                                 }
                             }
@@ -197,6 +199,8 @@ class TripDetailVC: BaseVC {
                     }
                 }
             }
+        }else{
+            self.showLoginAlert()
         }
     }
 }

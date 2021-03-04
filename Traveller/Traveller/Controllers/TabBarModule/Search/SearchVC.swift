@@ -8,34 +8,35 @@
 import UIKit
 import GooglePlaces
 import ActionSheetPicker_3_0
+import SwiftyJSON
 
 class SearchVC: BaseVC {
 
     @IBOutlet weak var edt_flyingfrom: UITextField!
     @IBOutlet weak var edt_flyingto: UITextField!
-    @IBOutlet weak var txv_startdate: UITextView!
-    @IBOutlet weak var txv_enddate: UITextView!
+    @IBOutlet weak var edt_fromdate: UITextField!
+    @IBOutlet weak var edt_todate: UITextField!
     
     @IBOutlet weak var tbl_search: UITableView!
-    
-    var start_timestamp: Int = 0
-    var end_timestamp: Int = 0
+    var from_location: String?
+    var to_location: String?
+    var start_timestamp: Int?
+    var end_timestamp: Int?
     var ds_search = [TravelModel]()
     
     var selected_field = 0 // 1: from 2: to
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        setUI()
-    }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        setDataSource()
+    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        setUI()
+        setDataSource(from_location: nil, to_location: nil, from_date: nil, to_date: nil)
     }
     
-    func  setDataSource()  {
-        self.ds_search.removeAll()
-        for i in 0 ..< TestData.user_images.count{
+    func setDataSource( from_location: String?, to_location: String?, from_date: Int?, to_date: Int?)  {
+        /**for i in 0 ..< TestData.user_images.count{
             var items = TestData.items
             for ii in 0 ..< 6{
                 let index = (i + ii) % 10
@@ -45,8 +46,29 @@ class SearchVC: BaseVC {
             }
             
             self.ds_search.append(TravelModel(travel_id: i, usermodel: UserModel(user_id: i, first_name: TestData.userNames[i], last_name: TestData.userNames[(i + 1) % 10], user_photo: TestData.user_images[i], user_email: TestData.userEmails[i], password: "", rating: TestData.rating[i], birthday: TestData.post_times[i] * 1000, phone_number: "123456789"), travel_time: Int64(TestData.post_times[i] * 1000), weight: Float(TestData.weight[i]), price: TestData.price[i], items: items, des: TestData.des[i], from_location: TestData.userLocation[i], to_location: TestData.userLocation[(i + 1) % 10]))
+        }*/
+        self.ds_search.removeAll()
+        self.showLoadingView(vc: self)
+        ApiManager.getTravel(from_location: from_location, to_location: to_location, from_date: from_date, to_date: to_date) { (isSuccess, data) in
+            self.hideLoadingView()
+            if isSuccess{
+                let data = JSON(data as Any)
+                if let array = data["total_travel"].arrayObject{
+                    if array.count > 0{
+                        var num = 0
+                        for one in array{
+                            num += 1
+                            self.ds_search.append(TravelModel(JSON(one)))
+                            if num == array.count{
+                                self.tbl_search.reloadData()
+                            }
+                        }
+                    }else{
+                        self.tbl_search.reloadData()
+                    }
+                }
+            }
         }
-        self.tbl_search.reloadData()
     }
     
     func setUI() {
@@ -59,19 +81,27 @@ class SearchVC: BaseVC {
     func editInit() {
         setEdtPlaceholder(edt_flyingfrom, placeholderText:"Flying from", placeColor: UIColor.lightGray, padding: .left(15))
         setEdtPlaceholder(edt_flyingto, placeholderText:"Flying to", placeColor: UIColor.lightGray, padding: .left(15))
-        txv_startdate.contentInset = .init(top: -5, left: 10, bottom: 0, right: 0)
-        txv_enddate.contentInset = .init(top: -5, left: 10, bottom: 0, right: 0)
+        setEdtPlaceholder(edt_fromdate, placeholderText:"Start date", placeColor: UIColor.lightGray, padding: .left(15))
+        setEdtPlaceholder(edt_todate, placeholderText:"End date", placeColor: UIColor.lightGray, padding: .left(15))
     }
     
     
     @IBAction func btnStartDateClicked(_ sender: Any) {
-        let datePicker = ActionSheetDatePicker(title:"Select start date and time", datePickerMode: UIDatePicker.Mode.dateAndTime, selectedDate: NSDate() as Date?, doneBlock: {
+        let datePicker = ActionSheetDatePicker(title:"Select start date and time", datePickerMode: UIDatePicker.Mode.date, selectedDate: NSDate() as Date?, doneBlock: {
             picker, value, index in
-            if let local_time = utcToLocal(dateStr: "\(value ?? "")"){
-                self.txv_startdate.text = String(local_time.split(separator: " ")[0]) + "\n" + String(local_time.split(separator: " ")[1]) + " " + String(local_time.split(separator: " ")[2])
-            }
+            
             if let datee = value as? Date{
-                self.start_timestamp = Int(datee.timeIntervalSince1970) * 1000
+                if  Int(NSDate().timeIntervalSince1970 * 1000) > Int(datee.timeIntervalSince1970) * 1000 + Constants.ONE_HOUR_TIMESTAMP{
+                    self.start_timestamp = nil
+                    self.edt_fromdate.text = ""
+                    self.showAlerMessage(message: "Please select correct start date!")
+                    return
+                }else{
+                    self.start_timestamp = Int(datee.timeIntervalSince1970) * 1000
+                    if let local_time = utcToLocal(dateStr: "\(value ?? "")"){
+                        self.edt_fromdate.text = String(local_time.split(separator: " ")[0])
+                    }
+                }
             }
             return
         }, cancel: { ActionStringCancelBlock in return }, origin: (sender as AnyObject).superview!.superview)
@@ -80,17 +110,23 @@ class SearchVC: BaseVC {
     }
     
     @IBAction func btnEndDateClicked(_ sender: Any) {
-        let datePicker = ActionSheetDatePicker(title:"Select end date and time", datePickerMode: UIDatePicker.Mode.dateAndTime, selectedDate: NSDate() as Date?, doneBlock: {
+        let datePicker = ActionSheetDatePicker(title:"Select end date and time", datePickerMode: UIDatePicker.Mode.date, selectedDate: NSDate() as Date?, doneBlock: {
             picker, value, index in
-            if let local_time = utcToLocal(dateStr: "\(value ?? "")"){
-                self.txv_enddate.text = String(local_time.split(separator: " ")[0]) + "\n" + String(local_time.split(separator: " ")[1]) + " " + String(local_time.split(separator: " ")[2])
-            }
             if let datee = value as? Date{
-                self.end_timestamp = Int(datee.timeIntervalSince1970) * 1000
+                if  Int(NSDate().timeIntervalSince1970 * 1000) > Int(datee.timeIntervalSince1970) * 1000 + Constants.ONE_HOUR_TIMESTAMP || Int(datee.timeIntervalSince1970) * 1000 <= self.start_timestamp ?? Int(NSDate().timeIntervalSince1970) * 1000 + Constants.ONE_HOUR_TIMESTAMP{
+                    self.start_timestamp = nil
+                    self.edt_todate.text = ""
+                    self.showAlerMessage(message: "Please select correct end date!")
+                    return
+                }else{
+                    self.end_timestamp = Int(datee.timeIntervalSince1970) * 1000
+                    if let local_time = utcToLocal(dateStr: "\(value ?? "")"){
+                        self.edt_todate.text = String(local_time.split(separator: " ")[0])
+                    }
+                }
             }
             return
         }, cancel: { ActionStringCancelBlock in return }, origin: (sender as AnyObject).superview!.superview)
-        
         datePicker?.show()
     }
     
@@ -99,6 +135,8 @@ class SearchVC: BaseVC {
         edt_flyingfrom.resignFirstResponder()
         let acController = GMSAutocompleteViewController()
         acController.delegate = self
+        
+        
         present(acController, animated: true, completion: nil)
     }
     
@@ -110,8 +148,8 @@ class SearchVC: BaseVC {
         present(acController, animated: true, completion: nil)
     }
     @IBAction func searchBtnClicked(_ sender: Any) {
-        self.showLoadingView(vc: self)
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+        
+        /*DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
             self.hideLoadingView()
             for i in 0 ... 6{
                 let index = Int.random(in: 0 ... 9)
@@ -120,16 +158,33 @@ class SearchVC: BaseVC {
                 }
             }
             self.tbl_search.reloadData()
-        }
+        }*/
+        self.from_location = self.edt_flyingfrom.text
+        self.to_location = self.edt_flyingto.text
+        print(from_location ?? "null", to_location ?? "null", start_timestamp ?? -1, end_timestamp ?? -1)
+        setDataSource(from_location: self.from_location, to_location: self.to_location, from_date: self.start_timestamp, to_date: self.end_timestamp)
+    }
+    @IBAction func refreshBtnClicked(_ sender: Any) {
+        self.edt_flyingfrom.text = ""
+        self.edt_flyingto.text = ""
+        self.edt_fromdate.text = ""
+        self.edt_todate.text = ""
+        self.from_location = nil
+        self.to_location = nil
+        self.start_timestamp = nil
+        self.end_timestamp = nil
+        setDataSource(from_location: nil, to_location: nil, from_date: nil, to_date: nil)
     }
 }
 
 extension SearchVC : GMSAutocompleteViewControllerDelegate {
   func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+    
+    print(place)
     if selected_field == 1{
-        edt_flyingfrom.text = place.name
+        edt_flyingfrom.text = place.formattedAddress
     }else if selected_field == 2{
-        edt_flyingto.text = place.name
+        edt_flyingto.text = place.formattedAddress
     }else{
         print("default")
     }
@@ -166,12 +221,10 @@ extension SearchVC : UITableViewDataSource, UITableViewDelegate{
        let cell = tbl_search.dequeueReusableCell(withIdentifier: "TravelCell", for:indexPath) as! TravelCell
         cell.setDataSource(one: self.ds_search[indexPath.section], vc:"SearchVC")
         cell.profileAction = {() in
-//            let tovc = self.createVC("CommentVC") as! CommentVC
-//            tovc.comment_room_id = "\(self.ds_search[indexPath.section].post_id ?? 0)"
-//            let navcontroller = UINavigationController(rootViewController: tovc)
-//            navcontroller.modalPresentationStyle = .fullScreen
-//            self.present(navcontroller, animated: false, completion: nil)
-            
+            let tovc = self.createVC("RateUserVC") as! RateUserVC
+            tovc.rate_user = self.ds_search[indexPath.section].usermodel
+            tovc.modalPresentationStyle = .fullScreen
+            self.navigationController?.pushViewController(tovc, animated: true)
         }
         return cell
     }

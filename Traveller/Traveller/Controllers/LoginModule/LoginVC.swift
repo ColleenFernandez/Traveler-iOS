@@ -15,9 +15,20 @@ import GoogleSignIn
 import FacebookCore
 import FBSDKLoginKit
 import AuthenticationServices
+import DLRadioButton
 
 class LoginVC: BaseVC{
+    
     @IBOutlet weak var lbl_signup: UILabel!
+    @IBOutlet weak var lbl_terms: UILabel!
+    @IBOutlet weak var btn_facebook: UIButton!
+    @IBOutlet weak var btn_apple: UIButton!
+    @IBOutlet weak var btn_google: UIButton!
+    @IBOutlet weak var btn_email: UIButton!
+    @IBOutlet weak var btn_guest: UIButton!
+    
+    @IBOutlet weak var btn_eng: DLRadioButton!
+    @IBOutlet weak var btn_rus: DLRadioButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,15 +41,47 @@ class LoginVC: BaseVC{
     }
     
     func setUI() {
-        self.lbl_signup.text = "Don't you have an account yet?\nSign up here"
+        setLanguageUI()
+        if language.language == .eng{
+            self.btn_eng.isSelected = true
+        }else{
+            self.btn_rus.isSelected = true
+        }
     }
+    
    
     @IBAction func englishBtnClicked(_ sender: Any) {
         //TODO: english clicked
+        language.set(.eng)
+        language.save()
+        setLanguageUI()
     }
     
     @IBAction func russianBtnClicked(_ sender: Any) {
         //TODO: english clicked
+        language.set(.rus)
+        language.save()
+        setLanguageUI()
+    }
+    
+    func setLanguageUI() {
+        if language.language == Languages.eng{
+            self.lbl_terms.text = "By clicking “login” you agree with our terms."
+            self.btn_facebook.setTitle("Login with Facebook", for: .normal)
+            self.btn_apple.setTitle("Login with Apple", for: .normal)
+            self.btn_google.setTitle("Login with Google", for: .normal)
+            self.btn_email.setTitle("Login with Email", for: .normal)
+            self.btn_guest.setTitle("Continue as guest", for: .normal)
+            self.lbl_signup.text = "Don't you have an account yet?\nSign up here"
+        }else{
+            self.lbl_terms.text = RUS.BY_CLICKING_TERMS
+            self.btn_facebook.setTitle(RUS.LOGIN_WITH_FACEBOOK, for: .normal)
+            self.btn_apple.setTitle(RUS.LOGIN_WITH_APPLE, for: .normal)
+            self.btn_google.setTitle(RUS.LOGIN_WITH_GOOGLE, for: .normal)
+            self.btn_email.setTitle(RUS.LOGIN_WITH_EMAIL, for: .normal)
+            self.btn_guest.setTitle(RUS.CONTINUE_AS_GUEST, for: .normal)
+            self.lbl_signup.text = RUS.DIDN_T_HAVE_AN_ACCOUNT_YET + "\n" + RUS.SIGN_UP_HERE
+        }
     }
     
     

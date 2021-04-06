@@ -55,6 +55,7 @@ struct PARAMS {
     static let WEIGHT         = "weight"
     static let REQUEST_TYPE   = "request_type"
     static let SOCIAL_ID   = "social_id"
+    static let LANGUAGE = "language"
 }
 
 class ApiManager {

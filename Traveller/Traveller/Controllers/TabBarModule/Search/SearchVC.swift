@@ -18,6 +18,7 @@ class SearchVC: BaseVC {
     @IBOutlet weak var edt_todate: UITextField!
     
     @IBOutlet weak var tbl_search: UITableView!
+    @IBOutlet weak var btn_search: UIButton!
     var from_location: String?
     var to_location: String?
     var start_timestamp: Int?
@@ -28,10 +29,11 @@ class SearchVC: BaseVC {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        setUI()
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUI()
+        
         setDataSource(from_location: nil, to_location: nil, from_date: nil, to_date: nil)
     }
     
@@ -73,16 +75,20 @@ class SearchVC: BaseVC {
     
     func setUI() {
         removeNavbarTopLine()
-        self.navigationItem.title = "Search for a Traveler"
+        if language.language == .eng{
+            self.navigationItem.title = "Search for a Traveler"
+        }else{
+            self.navigationItem.title = RUS.SEARCH_FOR_TRAVELLER
+        }
         editInit()
-        
+        self.btn_search.setTitle(language.language == .eng ? "Search" : RUS.SEARCH, for: .normal)
     }
     
     func editInit() {
-        setEdtPlaceholder(edt_flyingfrom, placeholderText:"Flying from", placeColor: UIColor.lightGray, padding: .left(15))
-        setEdtPlaceholder(edt_flyingto, placeholderText:"Flying to", placeColor: UIColor.lightGray, padding: .left(15))
-        setEdtPlaceholder(edt_fromdate, placeholderText:"Start date", placeColor: UIColor.lightGray, padding: .left(15))
-        setEdtPlaceholder(edt_todate, placeholderText:"End date", placeColor: UIColor.lightGray, padding: .left(15))
+        setEdtPlaceholder(edt_flyingfrom, placeholderText: language.language == .eng ? "Flying from" : RUS.FLYING_FROM, placeColor: UIColor.lightGray, padding: .left(15))
+        setEdtPlaceholder(edt_flyingto, placeholderText:language.language == .eng ? "Flying to" : RUS.FLYING_TO, placeColor: UIColor.lightGray, padding: .left(15))
+        setEdtPlaceholder(edt_fromdate, placeholderText:language.language == .eng ? "Start date" : RUS.START_DATE, placeColor: UIColor.lightGray, padding: .left(15))
+        setEdtPlaceholder(edt_todate, placeholderText:language.language == .eng ? "End date" : RUS.END_DATE, placeColor: UIColor.lightGray, padding: .left(15))
     }
     
     

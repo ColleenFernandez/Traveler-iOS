@@ -25,7 +25,15 @@ class ForgotVC: BaseVC {
     
     @IBOutlet weak var edt_newPwd: UITextField!
     @IBOutlet weak var confirmPwd: UITextField!
+    @IBOutlet weak var lbl_forgottext: UILabel!
+    @IBOutlet weak var btn_send: UIButton!
+    @IBOutlet weak var btn_backtologin: UIButton!
+    @IBOutlet weak var lbl_reset_password: UILabel!
+    @IBOutlet weak var btn_ok: UIButton!
+    @IBOutlet weak var btn_cancel: UIButton!
+    
     var pincode = ""
+   
     var email = ""
                  
     override func viewDidLoad() {
@@ -40,6 +48,31 @@ class ForgotVC: BaseVC {
         self.showNavBar()
         self.title = "Reset Password"
         self.addleftButton()
+        self.setUI()
+    }
+    
+    func setUI() {
+        if language.language == .eng{
+            self.lbl_forgottext.text = "Please input your email address to receive your PIN code to create a new password by email."
+            self.btn_send.setTitle("Send", for: .normal)
+            self.btn_backtologin.setTitle("Back to Login", for: .normal)
+            self.lbl_reset_password.text = "Reset Password"
+            self.setEdtPlaceholder(self.edt_newPwd, placeholderText: "New Password", placeColor: .lightGray, padding: .left(0))
+            self.setEdtPlaceholder(self.edt_newPwd, placeholderText: "Confirm New Password", placeColor: .lightGray, padding: .left(0))
+            self.btn_ok.setTitle("OK", for: .normal)
+            self.btn_cancel.setTitle("Cancel", for: .normal)
+            self.setEdtPlaceholder(self.edt_email, placeholderText: "Input your email here", placeColor: .lightGray, padding: .left(0))
+        }else{
+            self.lbl_forgottext.text = RUS.PLEASE_INPUT_YOUR_EMAIL_ADDRESS_TO_REIVE_YOUR_PIN
+            self.btn_send.setTitle(RUS.SEND, for: .normal)
+            self.btn_backtologin.setTitle(RUS.BACK_TO_LOGIN, for: .normal)
+            self.lbl_reset_password.text = RUS.RESET_PASSWORD
+            self.setEdtPlaceholder(self.edt_newPwd, placeholderText: RUS.NEW_PASSWORD, placeColor: .lightGray, padding: .left(0))
+            self.setEdtPlaceholder(self.edt_newPwd, placeholderText: RUS.CONFIRM_NEW_PASSWORD, placeColor: .lightGray, padding: .left(0))
+            self.btn_ok.setTitle(RUS.OK, for: .normal)
+            self.btn_cancel.setTitle(RUS.CANCEL, for: .normal)
+            self.setEdtPlaceholder(self.edt_email, placeholderText: RUS.INPUT_YOUR_MAIL_HERE, placeColor: .lightGray, padding: .left(0))
+        }
     }
     
     func addleftButton() {
@@ -69,13 +102,20 @@ class ForgotVC: BaseVC {
         //self.username = self.edt_userName.text!
         self.email = self.edt_email.text!
         if email.isEmpty{
-            self.showToast("Please input your email")
+            if language.language == .eng{
+                self.showToast("Please input your email")
+            }else{
+                self.showToast(RUS.PLEASE_INPUT_YOUR_EMAIL)
+            }
             return
         }
         
         if !(email.isValidEmail()){
-            self.showToast("Please input valid email")
-            //self.progShowInfo(true, msg: "Invalid phone number")
+            if language.language == .eng{
+                self.showToast("Please input valid email")
+            }else{
+                self.showToast(RUS.PLEASE_INPUT_YOUR_VALID_EMAIL)
+            }
             return
         }
         else{
@@ -169,7 +209,12 @@ class ForgotVC: BaseVC {
     
     func sendOTP()  {
         self.otpCodeView.becomeFirstResponder()
-        self.showAlerMessage(message: "Please check your mailbox and input your verification code")
+        if language.language == .eng{
+            self.showAlerMessage(message: "Please check your mailbox and input your verification code")
+        }else{
+            self.showToast(RUS.PLEASE_CHECK_YOUR_MAIL_BOX_AND_INPUT_YOUR_VERIFICATION_CODE)
+        }
+        
         //self.showAlerMessage(message: "Please input your verification code.")
         self.btn_submit.setTitle("Resend", for: .normal)
         self.dismissKeyboard()
@@ -226,7 +271,11 @@ extension ForgotVC : KAPinFieldDelegate {
                 self.uiv_dlgBack.isHidden = false
             }
         }else{
-            self.showAlerMessage(message: "PIN code is incorret")
+            if language.language == .eng{
+                self.showAlerMessage(message: "PIN code is incorret")
+            }else{
+                self.showAlerMessage(message: RUS.PIN_CODE_IS_INCORRECT)
+            }
             field.animateFailure()
             self.otpCodeView.becomeFirstResponder()
             return

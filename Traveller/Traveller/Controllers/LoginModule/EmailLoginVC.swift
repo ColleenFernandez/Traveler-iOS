@@ -11,6 +11,9 @@ class EmailLoginVC: BaseVC {
 
     @IBOutlet weak var edt_email: UITextField!
     @IBOutlet weak var edt_password: UITextField!
+    @IBOutlet weak var btn_forgot: UIButton!
+    @IBOutlet weak var btn_login: UIButton!
+    @IBOutlet weak var lbl_back: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -18,8 +21,19 @@ class EmailLoginVC: BaseVC {
     }
     
     func setUI() {
-        setEdtPlaceholder(edt_email, placeholderText:"Email", placeColor: UIColor.lightGray, padding: .left(20))
-        setEdtPlaceholder(edt_password, placeholderText:"Password", placeColor: UIColor.lightGray, padding: .left(20))
+        if language.language == .eng{
+            setEdtPlaceholder(edt_email, placeholderText:"Email", placeColor: UIColor.lightGray, padding: .left(20))
+            setEdtPlaceholder(edt_password, placeholderText:"Password", placeColor: UIColor.lightGray, padding: .left(20))
+            self.btn_forgot.setTitle("Forgot Password?", for: .normal)
+            self.btn_login.setTitle("Login", for: .normal)
+            self.lbl_back.text = "Back"
+        }else{
+            setEdtPlaceholder(edt_email, placeholderText:RUS.EMAIL, placeColor: UIColor.lightGray, padding: .left(20))
+            setEdtPlaceholder(edt_password, placeholderText:RUS.PASSWORD, placeColor: UIColor.lightGray, padding: .left(20))
+            self.btn_forgot.setTitle(RUS.FORGOT_PASSWORD, for: .normal)
+            self.btn_login.setTitle(RUS.LOGIN, for: .normal)
+            self.lbl_back.text = RUS.BACK
+        }
     }
     
     @IBAction func loginBtnClicked(_ sender: Any) {
@@ -27,16 +41,29 @@ class EmailLoginVC: BaseVC {
         let password = self.edt_password.text ?? ""
         
         if email.isEmpty{
-            self.showToast("Please input your email")
+            if language.language == .eng{
+                self.showToast("Please input your email")
+            }else{
+                self.showToast(RUS.PLEASE_INPUT_YOUR_EMAIL)
+            }
             return
         }
         if !email.isValidEmail(){
-            self.showToast("Please input your valid email")
+            if language.language == .eng{
+                self.showToast("Please input your valid email")
+            }else{
+                self.showToast(RUS.PLEASE_INPUT_YOUR_VALID_EMAIL)
+            }
             return
         }
         
         if password.isEmpty{
-            self.showToast("Please input your password")
+            if language.language == .eng{
+                self.showToast("Please input your password")
+            }else{
+                self.showToast(RUS.PLEASE_INPUT_YOUR_PASSWORD)
+            }
+            
             return
         }else{
             self.showLoadingView(vc: self)
@@ -46,7 +73,19 @@ class EmailLoginVC: BaseVC {
                     self.gotoTabControllerWithIndex(0)
                 }else{
                     if let msg = data as? String{
-                        self.showAlerMessage(message: msg)
+                        if msg == "User doesn't exist"{
+                            if language.language == .eng{
+                                self.showAlerMessage(message: msg)
+                            }else{
+                                self.showAlerMessage(message: RUS.USER_DON_T_EXIST)
+                            }
+                        }else{
+                            if language.language == .eng{
+                                self.showAlerMessage(message: msg)
+                            }else{
+                                self.showAlerMessage(message: RUS.INCORRECT_PASSWORD)
+                            }
+                        }
                     }
                 }
             }

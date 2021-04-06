@@ -34,11 +34,29 @@ class MyTripDetail: BaseVC {
     @IBOutlet weak var cus_shoes: BEMCheckBox!
     @IBOutlet weak var txv_from_traveler: UITextView!
     
+    @IBOutlet weak var lbl_document: UILabel!
+    @IBOutlet weak var lbl_medicine: UILabel!
+    @IBOutlet weak var lbl_makeup: UILabel!
+    @IBOutlet weak var lbl_money: UILabel!
+    @IBOutlet weak var lbl_food: UILabel!
+    @IBOutlet weak var lbl_mobile: UILabel!
+    @IBOutlet weak var lbl_laptop: UILabel!
+    @IBOutlet weak var lbl_electronics: UILabel!
+    @IBOutlet weak var lbl_books: UILabel!
+    @IBOutlet weak var lbl_toys: UILabel!
+    @IBOutlet weak var lbl_clothes: UILabel!
+    @IBOutlet weak var lbl_shoes: UILabel!
+    @IBOutlet weak var lbl_icanbring: UILabel!
+    @IBOutlet weak var lbl_travelnotes: UILabel!
+    
     var one: TravelModel?
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        setUI()
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUI()
     }
     
     func setUI() {
@@ -71,7 +89,24 @@ class MyTripDetail: BaseVC {
             self.lbl_from.text = "From:" + " " + one.from_location!
             self.lbl_to.text = "To:" + " " + one.to_location!
         }
-        self.navigationItem.title = "My Trip Details"
+        
+        self.lbl_document.text = language.language == .eng ? "Document" : RUS.DOCUMENT
+        self.lbl_medicine.text = language.language == .eng ? "Medicine" : RUS.MEDICINE
+        self.lbl_makeup.text = language.language == .eng ? "Makeup" : RUS.MAKEUP
+        self.lbl_money.text = language.language == .eng ? "Money" : RUS.MONEY
+        self.lbl_food.text = language.language == .eng ? "Food" : RUS.FOOD
+        self.lbl_mobile.text = language.language == .eng ? "Mobile" : RUS.MOBILE
+        self.lbl_laptop.text = language.language == .eng ? "Laptop" : RUS.LAPTOP
+        self.lbl_electronics.text = language.language == .eng ? "Electronics" : RUS.ELECTRONICS
+        self.lbl_books.text = language.language == .eng ? "Books" : RUS.BOOKS
+        self.lbl_toys.text = language.language == .eng ? "Toys" : RUS.TOYS
+        self.lbl_clothes.text = language.language == .eng ? "Clothes" : RUS.CLOTHES
+        self.lbl_shoes.text = language.language == .eng ? "Shoes" : RUS.SHOES
+        
+        self.lbl_icanbring.text =  language.language == .eng ? "I can bring the following" : RUS.I_CAN_BRING_FOLLOWING
+        self.lbl_travelnotes.text = language.language == .eng ? "Travel Notes" : RUS.TRAVEL_NOTES
+        
+        self.navigationItem.title = language.language == .eng ? "My Trip Details" : "Детали моей поездки"
         self.addLeftButton4NavBar()
     }
     

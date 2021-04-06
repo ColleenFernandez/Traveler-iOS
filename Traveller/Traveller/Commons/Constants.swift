@@ -3,8 +3,118 @@ import UIKit
 
 public let PLACE_API_KEY = "AIzaSyD5eBj9SeVQLGAqtG2Z4QW3sxAKIpI7ve4"
 
-struct Messages {
 
+struct RUS {
+    static let BY_CLICKING_TERMS                                           = "Регистрируясь вы принимаете наши условия использования приложения"
+    static let LOGIN_WITH_FACEBOOK                                         = "Зарегистрироваться используя Facebook"
+    static let LOGIN_WITH_APPLE                                            = "Зарегистрироваться используя Aapple"
+    static let LOGIN_WITH_GOOGLE                                           = "Зарегистрироваться используя Google"
+    static let LOGIN_WITH_EMAIL                                            = "Зарегистрироваться используя адрес электронной почты"
+    static let CONTINUE_AS_GUEST                                           = "Зарегистрироваться используя адрес электронной почты"
+    static let DIDN_T_HAVE_AN_ACCOUNT_YET                                  = "Не имеете аккаунт?"
+    static let SIGN_UP_HERE                                                = "Подпишитесь здесь"
+    static let EMAIL                                                       = "Адрес электронной почты"
+    static let PASSWORD                                                    = "Пароль"
+    static let FORGOT_PASSWORD                                             = "Забыли пароль?"
+    static let LOGIN                                                       = "Войти"
+    static let BACK                                                        = "Назад"
+    static let PLEASE_INPUT_YOUR_EMAIL                                     = "Пожалуйста введите адрес электронной почты"
+    static let PLEASE_INPUT_YOUR_VALID_EMAIL                               = "Пожалуйста введите корректный адрес электронной почты"
+    static let PLEASE_INPUT_YOUR_PASSWORD                                  = "Пожалуйста введите пароль"
+    static let USER_DON_T_EXIST                                            = "Данный пользователь не существует"
+    static let INCORRECT_PASSWORD                                          = "Неверный пароль"
+    static let PLEASE_INPUT_YOUR_EMAIL_ADDRESS_TO_REIVE_YOUR_PIN           = "Пожалуйста укажите ваш адрес электронной почты на который вам пришлют пин для востоновление нового пароля"
+    static let SEND                                                        = "Отправить"
+    
+    static let BACK_TO_LOGIN                                               = "Вернутся"
+    static let INPUT_YOUR_MAIL_HERE                                        = "Введите вашь адрес электронной почты"
+    static let PLEASE_CHECK_YOUR_MAIL_BOX_AND_INPUT_YOUR_VERIFICATION_CODE = "Проверьте вашу эл. почту и введите код"
+    static let PIN_CODE_IS_INCORRECT                                       = "Неверный код"
+    static let RESET_PASSWORD                                              = "Создать новый пароль"
+    static let NEW_PASSWORD                                                = "Новый пароль"
+    static let CONFIRM_NEW_PASSWORD                                        = "Подтвердите новый пароль"
+    static let OK                                                          = "Подтвердить"
+    static let CANCEL                                                      = "Отменить"
+    
+    static let SEARCH                                                      = "Поиск"
+    static let MY_TRIPS                                                    = "Мои Поездки"
+    static let CHAT                                                        = "Переписка"
+    static let RATING                                                      = "Рейтинг"
+    static let PROFILE                                                     = "Профиль"
+    static let SEARCH_FOR_TRAVELLER                                        = "Поиск путешественника"
+    static let FLYING_FROM                                                 = "Место выезда"
+    static let FLYING_TO                                                   = "Место прибытия"
+    static let START_DATE                                                  = "От"
+    static let END_DATE                                                    = "До"
+    static let TRIP_DETAILS                                                = "Информация о поездке"
+    static let FROM                                                        = "Место выезда"
+    static let TO                                                          = "Место прибытия"
+    static let I_CAN_BRING_FOLLOWING                                       = "Могу привезти следующие"
+    static let DOCUMENT                                                    = "Документы"
+    static let MEDICINE                                                    = "Лекарство"
+    static let MAKEUP                                                      = "Кассметика"
+    static let MONEY                                                       = "Деньги"
+    static let FOOD                                                        = "Продукты"
+    static let MOBILE                                                      = "Телефон"
+    static let LAPTOP                                                      = "Ноутбук"
+    static let ELECTRONICS                                                 = "Техника"
+    
+    static let BOOKS                                                       = "Книги"
+    static let TOYS                                                        = "Книги"
+    static let CLOTHES                                                     = "Одежду"
+    static let SHOES                                                       = "Обувь"
+    static let PER_KG                                                      = "За 1 КГ"
+    static let FROM_TRAVELER                                               = "От путешественника"
+    static let WRITE_A_MESSAGE_TO_START_CHATTING                           = "Напешите путешествнееику и начните с ними переписку"
+    
+    static let PLEASE_INPUT_SEND_TEXT                                      = "Добавьте сообщение"
+    static let HISTORY                                                     = "Прошлие поездки"
+    static let ACTIVE_TRIPS                                                = "Предстоящие поездки"
+    static let NEW_TRIP                                                    = "Новая Поездка"
+    
+    static let ARRIVAL_DATE                                                = "Дата прибытия"
+    static let ARRIVAL_TIME                                                = "Время прибытия"
+    static let CAN_CARRY                                                   = "Свободный вес"
+    static let PRICE_PER_KG                                                = "Цена за КГ"
+    static let SELECT_ALL                                                  = "Все"
+    static let YOU_CAN_ADD_ADDITIONAL_INFORMATION_HERE                     = "Добавить дополнительную информацию для заказчиков"
+    static let SAVE_TRIP                                                   = "Сохранить поездку"
+    static let PLEASE_SELECT_FLYING_LOCATION                               = "Укажите место выезда"
+    static let PLEASE_SELECT_TO_LOCATION                                   = "Укажите место прибытия"
+    static let PLEASE_SELECT_ARRIVAL_DATE                                  = "Укажите число прибытия"
+    static let PLEASE_SELECT_ARRIVAL_TIME                                  = "Укажите время прибытия"
+    static let REPLY_TO_REVIEWER                                           = "Ответить на отзыв"
+    
+    static let REPLY                                                       = "Ответить"
+    static let CHANGE_PASSWORD                                             = "Поменять пароль"
+    static let UPDATE                                                      = "Обновить"
+    static let LOGOUT                                                      = "Выйти"
+    static let FIRST_NAME                                                  = "Имя"
+    static let LAST_NAME                                                   = "Фамилия"
+    static let DATE_OF_BIRTH                                               = "День рождения"
+    static let SUCCESSFULLY_UPDATED                                        = "Успешное обновление"
+    static let DATE                                        = "датировать"
+    static let PLEASE_INPUT_WEIGHT                                        = "введите вес"
+    static let PLEASE_INPUT_PRICE                                        = "Пожалуйста, введите цену."
+    static let PLEASE_INPUT_BRING_ITEMS                                        = "пожалуйста, выберите принести предметы."
+    static let WRITE_YOUR_REPLY_ON_REVIEWER                                        = "напишите свой ответ рецензенту."
+    
+    static let PLEASE_INPUT_YOUR_LAST_NAME                                                       = "пожалуйста, введите вашу фамилию."
+    static let PLEASE_INPUT_YOUR_FIRST_NAME                                                       = "пожалуйста, введите ваше имя."
+    static let PLEASE_INPUT_YOUR_BIRTHDAY                                                       = "введите свой день рождения."
+    static let SELECT_YOUR_BIRTHDAY                                                       = "выберите свой день рождения."
+    static let PLEASE_SELECT_YOUR_CORRECT_BIRTHDAY                                                       = "пожалуйста, выберите свой правильный день рождения."
+    static let YOUR_SESSION_IS_SOCIAL                                                       = "Ваш сеанс - это социальный вход. Для входа в социальную сеть пароль не нужен."
+    
+    
+    static let PLEASE_INPUT_CORRECT_CURRENT_PASSWORD                                                   = "пожалуйста, введите правильный текущий пароль."
+    static let PLEASE_INPUT_NEW_PASSWORD                                                   = "введите новый пароль."
+    static let PLEASE_INPUT_CONFIRM_PASSWORD                                                   = "введите пароль подтверждения."
+    static let PLEASE_INPUT_MATCHED_CONFIRM_PASSWORD                                                   = "Пожалуйста, введите соответствующий пароль для подтверждения."
+    static let PASSWORD_UPDATED                                                   = "пароль обновлен"
+    static let CURRENT_PASSWORD                                                   = "действующий пароль"
+    static let TRAVEL_NOTES                                                   = "путевые заметки"
+    
 }
 
 struct Constants {
@@ -12,16 +122,16 @@ struct Constants {
     static let SAVE_ROOT_PATH      = "save_root"
     static let SCREEN_HEIGHT       = UIScreen.main.bounds.height
     static let SCREEN_WIDTH        = UIScreen.main.bounds.width
-    static let TERMS_LINK    = "http://mofutomo.com/terms.pdf"
-    static let PRIVACY_LINK    = "http://mofutomo.com/privacy.pdf"
-    static let items = ["Document", "Medicine", "Makeup", "Money", "Food", "Mobile", "Laptop", "Electronics", "Books", "Toys", "Clothes", "Shoes"]
-    static let ONE_MIN_TIMESTAMP      = 60 * 1000
-    static let ONE_HOUR_TIMESTAMP      = 3600 * 1000
-    static let ONE_DAY_TIMESTAMP      = 86400 * 1000
-    static let ONE_WEEK_TIMESTAMP      = 604800 * 1000
-    static let ONE_MONTH_TIMESTAMP      = 2629743 * 1000
-    static let ONE_YEAR_TIMESTAMP      = 31556926 * 1000
-    static let CLIENT_ID    = "491391337775-gjr5p6otsu0vqlmdgumt4c20qrgaefet.apps.googleusercontent.com"
+    static let TERMS_LINK          = "http://mofutomo.com/terms.pdf"
+    static let PRIVACY_LINK        = "http://mofutomo.com/privacy.pdf"
+    static let items               = ["Document", "Medicine", "Makeup", "Money", "Food", "Mobile", "Laptop", "Electronics", "Books", "Toys", "Clothes", "Shoes"]
+    static let ONE_MIN_TIMESTAMP   = 60 * 1000
+    static let ONE_HOUR_TIMESTAMP  = 3600 * 1000
+    static let ONE_DAY_TIMESTAMP   = 86400 * 1000
+    static let ONE_WEEK_TIMESTAMP  = 604800 * 1000
+    static let ONE_MONTH_TIMESTAMP = 2629743 * 1000
+    static let ONE_YEAR_TIMESTAMP  = 31556926 * 1000
+    static let CLIENT_ID           = "491391337775-gjr5p6otsu0vqlmdgumt4c20qrgaefet.apps.googleusercontent.com"
 }
 
 struct COLORS {
@@ -64,5 +174,42 @@ struct TestData {
     static let des = ["Absence makes the heart grow fonder","Actions speak louder than words.","A journey of a thousand miles begins with a single step","All good things must come to an end","A picture is worth a thousand words","    A watched pot never boils","Beggars can’t be choosers","Beauty is in the eye of the beholder","Better late than never","Birds of a feather flock together"]
     
 }
+
+enum Languages: Int {
+    case eng = 1
+    case rus = 2
+}
+
+class Language{
+    var language: Languages = .eng
+    
+    init() {
+        self.language = .eng
+    }
+    
+    init(_ lang: Languages) {
+        self.language = lang
+    }
+    
+    func set(_ lang: Languages)  {
+        self.language = lang
+    }
+    
+    func load()  {
+        self.language = UserDefault.getInt(key: PARAMS.LANGUAGE, defaultValue: Languages.eng.rawValue) == Languages.eng.rawValue ? .eng : .rus
+    }
+    
+    func save() {
+        UserDefault.setInt(key: PARAMS.LANGUAGE, value: self.language.rawValue)
+    }
+    
+    func clear()  {
+        UserDefault.setInt(key: PARAMS.LANGUAGE, value: Languages.eng.rawValue)
+    }
+}
+
+
+
+
 
 

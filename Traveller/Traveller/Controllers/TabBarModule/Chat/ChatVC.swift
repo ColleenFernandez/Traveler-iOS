@@ -38,7 +38,7 @@ class ChatVC: BaseVC {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.navigationItem.title = "Chat"
+        self.navigationItem.title = language.language == .eng ? "Chat" : RUS.CHAT
         if thisuser.isValid{
             let roomid = "u" + meid
             self.userlistListner(roomid)

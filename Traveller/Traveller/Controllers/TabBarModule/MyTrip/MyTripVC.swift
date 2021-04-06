@@ -13,6 +13,8 @@ class MyTripVC: BaseVC {
     @IBOutlet weak var tbl_active: UITableView!
     @IBOutlet weak var tbl_history: UITableView!
     
+    @IBOutlet weak var lbl_active_trips: UILabel!
+    @IBOutlet weak var lbl_history: UILabel!
     @IBOutlet weak var cons_active: NSLayoutConstraint!
     @IBOutlet weak var cons_history: NSLayoutConstraint!
     var ds_active = [TravelModel]()
@@ -20,17 +22,19 @@ class MyTripVC: BaseVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        setUI()
     }
     
     func setUI()  {
         restoreNavbarTopLine()
-        navigationItem.title = "My Trips"
+        navigationItem.title = language.language == .eng ? "My Trips" : RUS.MY_TRIPS
+        self.lbl_active_trips.text = language.language == .eng ? "Active Trips" : RUS.ACTIVE_TRIPS
+        self.lbl_history.text = language.language == .eng ? "History" : RUS.HISTORY
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         if thisuser.isValid{
+            setUI()
             setDataSource()
         }else{
             self.showLoginAlert()

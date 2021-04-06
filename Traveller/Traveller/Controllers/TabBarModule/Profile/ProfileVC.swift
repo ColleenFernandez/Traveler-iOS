@@ -15,6 +15,7 @@ import Photos
 import ActionSheetPicker_3_0
 import SKCountryPicker
 import Kingfisher
+import DLRadioButton
 
 class ProfileVC: BaseVC {
     
@@ -38,6 +39,16 @@ class ProfileVC: BaseVC {
     
     @IBOutlet weak var uiv_back: UIView!
     @IBOutlet weak var uiv_modal: UIView!
+    @IBOutlet weak var btn_chanagepwd: UIButton!
+    
+    @IBOutlet weak var btn_update: UIButton!
+    @IBOutlet weak var btn_logout: UIButton!
+    @IBOutlet weak var btn_changepwds: UIButton!
+    
+    @IBOutlet weak var lbl_changepwd: UILabel!
+    @IBOutlet weak var btn_eng: DLRadioButton!
+    @IBOutlet weak var btn_rus: DLRadioButton!
+    
     var imageFils = [String]()
     var first_name = ""
     var last_name = ""
@@ -53,10 +64,10 @@ class ProfileVC: BaseVC {
         hideNavBar()
         if !thisuser.isValid{
             setChangePwd(false)
-            setEdtPlaceholder(edt_firstname, placeholderText:"First Name", placeColor: UIColor.lightGray, padding: .left(20))
-            setEdtPlaceholder(edt_lastname, placeholderText:"Last Name", placeColor: UIColor.lightGray, padding: .left(20))
-            setEdtPlaceholder(edt_email, placeholderText:"Email", placeColor: UIColor.lightGray, padding: .left(20))
-            setEdtPlaceholder(edt_birthday, placeholderText:"Birthday", placeColor: UIColor.lightGray, padding: .left(20))
+            setEdtPlaceholder(edt_firstname, placeholderText:language.language == .eng ? "First Name" : RUS.FIRST_NAME, placeColor: UIColor.lightGray, padding: .left(20))
+            setEdtPlaceholder(edt_lastname, placeholderText:language.language == .eng ? "Last Name" : RUS.LAST_NAME, placeColor: UIColor.lightGray, padding: .left(20))
+            setEdtPlaceholder(edt_email, placeholderText:language.language == .eng ? "Email" : RUS.EMAIL, placeColor: UIColor.lightGray, padding: .left(20))
+            setEdtPlaceholder(edt_birthday, placeholderText:language.language == .eng ? "Date of Birth" : RUS.DATE_OF_BIRTH, placeColor: UIColor.lightGray, padding: .left(20))
             setEdtPlaceholder(edt_pwd, placeholderText:"*********", placeColor: UIColor.lightGray, padding: .left(20))
             edt_firstname.isUserInteractionEnabled = false
             edt_lastname.isUserInteractionEnabled = false
@@ -64,28 +75,67 @@ class ProfileVC: BaseVC {
             edt_birthday.isUserInteractionEnabled = false
             edt_pwd.isUserInteractionEnabled = false
             showLoginAlert()
-        }
-    }
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        if thisuser.isValid{
+        }else{
             setUI()
             uiv_camera.addTapGesture(tapNumber: 1, target: self, action: #selector(onEdtPhoto))
             self.imagePicker = ImagePicker1(presentationController: self, delegate: self, is_cropping: true)
         }
     }
     
+    override func viewDidLoad() {
+        super.viewDidLoad()
+    }
+    
+    @IBAction func englishBtnClicked(_ sender: Any) {
+        //TODO: english clicked
+        language.set(.eng)
+        language.save()
+        setUI()
+        setTab()
+    }
+    
+    @IBAction func russianBtnClicked(_ sender: Any) {
+        //TODO: english clicked
+        language.set(.rus)
+        language.save()
+        setUI()
+        setTab()
+    }
+    
+    func setTab()  {
+        let tabbarController = self.navigationController?.tabBarController as! TabBarVC
+        
+        guard let items = tabbarController.tabBar.items else { return }
+        if language.language == .eng{
+            items[0].title = "Search"
+            items[1].title = "My trips"
+            items[2].title = "Chat"
+            items[3].title = "Rating"
+            items[4].title = "Profile"
+        }else{
+            items[0].title = RUS.SEARCH
+            items[1].title = RUS.MY_TRIPS
+            items[2].title = RUS.CHAT
+            items[3].title = RUS.RATING
+            items[4].title = RUS.PROFILE
+        }
+    }
+    
     func setUI()  {
         setChangePwd(false)
         editInit()
+        if language.language == .eng{
+            self.btn_eng.isSelected = true
+        }else{
+            self.btn_rus.isSelected = true
+        }
     }
     
     func editInit() {
-        setEdtPlaceholder(edt_firstname, placeholderText:"First Name", placeColor: UIColor.lightGray, padding: .left(20))
-        setEdtPlaceholder(edt_lastname, placeholderText:"Last Name", placeColor: UIColor.lightGray, padding: .left(20))
-        setEdtPlaceholder(edt_email, placeholderText:"Email", placeColor: UIColor.lightGray, padding: .left(20))
-        setEdtPlaceholder(edt_birthday, placeholderText:"Birthday", placeColor: UIColor.lightGray, padding: .left(20))
+        setEdtPlaceholder(edt_firstname, placeholderText:language.language == .eng ? "First Name" : RUS.FIRST_NAME, placeColor: UIColor.lightGray, padding: .left(20))
+        setEdtPlaceholder(edt_lastname, placeholderText:language.language == .eng ? "Last Name" : RUS.LAST_NAME, placeColor: UIColor.lightGray, padding: .left(20))
+        setEdtPlaceholder(edt_email, placeholderText:language.language == .eng ? "Email" : RUS.EMAIL, placeColor: UIColor.lightGray, padding: .left(20))
+        setEdtPlaceholder(edt_birthday, placeholderText:language.language == .eng ? "Date of Birth" : RUS.DATE_OF_BIRTH, placeColor: UIColor.lightGray, padding: .left(20))
         setEdtPlaceholder(edt_pwd, placeholderText:"*********", placeColor: UIColor.lightGray, padding: .left(20))
         
         edt_firstname.text = thisuser.first_name
@@ -109,6 +159,12 @@ class ProfileVC: BaseVC {
         if let phone_number = thisuser.phone_number?.split(separator: ",").last{
             edt_phonenumber.text = String(phone_number)
         }
+        
+        self.btn_chanagepwd.setTitle(language.language == .eng ? "Change Password" : RUS.CHANGE_PASSWORD, for: .normal)
+        self.btn_update.setTitle(language.language == .eng ? "Update" : RUS.UPDATE, for: .normal)
+        self.btn_logout.setTitle(language.language == .eng ? "Logout" : RUS.LOGOUT, for: .normal)
+        self.btn_changepwds.setTitle(language.language == .eng ? "Change Password" : RUS.CHANGE_PASSWORD, for: .normal)
+        self.lbl_changepwd.text = language.language == .eng ? "Change Password" : RUS.CHANGE_PASSWORD
     }
     
     @objc func onEdtPhoto(gesture: UITapGestureRecognizer) -> Void {
@@ -136,24 +192,24 @@ class ProfileVC: BaseVC {
             //phonenumber = self.edt_phonenumber.text ?? ""
             
             if first_name.isEmpty{
-                self.showToast("Please input your first name")
+                self.showToast(language.language == .eng ? "Please input your first name" : RUS.PLEASE_INPUT_YOUR_FIRST_NAME)
                 return
             }
             
             if last_name.isEmpty{
-                self.showToast("Please input your last name")
+                self.showToast(language.language == .eng ? "Please input your last name": RUS.PLEASE_INPUT_YOUR_LAST_NAME)
                 return
             }
             if email.isEmpty{
-                self.showToast("Please input your email")
+                self.showToast(language.language == .eng ? "Please input your email" : RUS.PLEASE_INPUT_YOUR_EMAIL)
                 return
             }
             if !email.isValidEmail(){
-                self.showToast("Please input your valid email")
+                self.showToast(language.language == .eng ? "Please input your valid email" : RUS.PLEASE_INPUT_YOUR_VALID_EMAIL)
                 return
             }
             if birthday.isEmpty{
-                self.showToast("Please input your birthday")
+                self.showToast(language.language == .eng ? "Please input your birthday" : RUS.PLEASE_INPUT_YOUR_BIRTHDAY)
                 return
             }
 //            if phonenumber.isEmpty{
@@ -166,7 +222,7 @@ class ProfileVC: BaseVC {
                 ApiManager.updateProfile(first_name: first_name, last_name: last_name, user_photo: imageFils.first ?? "", birthday: birthday_timestamp == 0 ? thisuser.birthday ?? 0 : birthday_timestamp, phone_number: thisuser.phone_number ?? "" ) { (isSuccess, data) in
                     self.hideLoadingView()
                     if isSuccess{
-                        self.showAlerMessage(message: "Successfully Updated")
+                        self.showAlerMessage(message: language.language == .eng ? "Successfully Updated" : RUS.SUCCESSFULLY_UPDATED)
                     }else{
                         if let msg = data as? String{
                             self.showAlerMessage(message: msg)
@@ -181,13 +237,13 @@ class ProfileVC: BaseVC {
     
     @IBAction func birthdayBtnClicked(_ sender: Any) {
         if thisuser.isValid{
-            let datePicker = ActionSheetDatePicker(title:"Select your birthday", datePickerMode: UIDatePicker.Mode.date, selectedDate: NSDate() as Date?, doneBlock: {
+            let datePicker = ActionSheetDatePicker(title:language.language == .eng ? "Select your birthday" : RUS.SELECT_YOUR_BIRTHDAY, datePickerMode: UIDatePicker.Mode.date, selectedDate: NSDate() as Date?, doneBlock: {
                 picker, value, index in
                 
                 if let datee = value as? Date{
                     if  Int(NSDate().timeIntervalSince1970 * 1000) - Int(datee.timeIntervalSince1970) * 1000 <= Constants.ONE_YEAR_TIMESTAMP * 1{
                         self.birthday_timestamp = 0
-                        self.showAlerMessage(message: "Please select your correct birthday!")
+                        self.showAlerMessage(message: language.language == .eng ? "Please select your correct birthday!" : RUS.PLEASE_SELECT_YOUR_CORRECT_BIRTHDAY)
                         return
                     }else{
                         self.birthday_timestamp = Int(datee.timeIntervalSince1970) * 1000
@@ -207,7 +263,7 @@ class ProfileVC: BaseVC {
             if thisuser.login_type == .email{
                 setChangePwd(true)
             }else{
-                self.showToast("Your session is social login. Social login doesn't need password.")
+                self.showToast(language.language == .eng ? "Your session is social login. Social login doesn't need password." : RUS.YOUR_SESSION_IS_SOCIAL)
             }
             
         }else{
@@ -224,19 +280,19 @@ class ProfileVC: BaseVC {
             let confirmpwd = self.edt_confirmpwd.text
             
             if currentpwd != thisuser.password{
-                self.showToast("Please input correct current password")
+                self.showToast(language.language == .eng ? "Please input correct current password" : RUS.PLEASE_INPUT_CORRECT_CURRENT_PASSWORD)
                 return
             }
             if let newpwd = newpwd, newpwd.isEmpty{
-                self.showToast("Please input new password")
+                self.showToast(language.language == .eng ? "Please input new password" : RUS.PLEASE_INPUT_NEW_PASSWORD)
                 return
             }
             if let confirmpwd = confirmpwd, confirmpwd.isEmpty{
-                self.showToast("Please input confirm  password")
+                self.showToast(language.language == .eng ? "Please input confirm password" : RUS.PLEASE_INPUT_CONFIRM_PASSWORD)
                 return
             }
             if newpwd != confirmpwd{
-                self.showToast("Please input matched confirm password")
+                self.showToast(language.language == .eng ? "Please input matched confirm password" : RUS.PLEASE_INPUT_MATCHED_CONFIRM_PASSWORD)
                 return
             }else{
                 self.showLoadingView(vc: self)
@@ -246,7 +302,7 @@ class ProfileVC: BaseVC {
                         UserDefault.setString(key: PARAMS.PASSWORD, value: newpwd)
                         thisuser.loadUserInfo()
                         thisuser.saveUserInfo()
-                        self.showAlerMessage(message: "Password updated")
+                        self.showAlerMessage(message: language.language == .eng ? "Password updated" : RUS.PASSWORD_UPDATED)
                         self.setChangePwd(false)
                     }
                 }
@@ -265,9 +321,9 @@ class ProfileVC: BaseVC {
         self.uiv_modal.isHidden = !isShow
         self.uiv_back.isHidden = !isShow
         if isShow{
-            setEdtPlaceholder(edt_currentpwd, placeholderText:"Current Password", placeColor: UIColor.lightGray, padding: .left(20))
-            setEdtPlaceholder(edt_newpwd, placeholderText:"New Password", placeColor: UIColor.lightGray, padding: .left(20))
-            setEdtPlaceholder(edt_confirmpwd, placeholderText:"Confirm New Password", placeColor: UIColor.lightGray, padding: .left(20))
+            setEdtPlaceholder(edt_currentpwd, placeholderText:language.language == .eng ? "Current Password" : RUS.CURRENT_PASSWORD, placeColor: UIColor.lightGray, padding: .left(20))
+            setEdtPlaceholder(edt_newpwd, placeholderText:language.language == .eng ? "New Password" : RUS.NEW_PASSWORD, placeColor: UIColor.lightGray, padding: .left(20))
+            setEdtPlaceholder(edt_confirmpwd, placeholderText:language.language == .eng ? "Confirm New Password" : RUS.CONFIRM_NEW_PASSWORD, placeColor: UIColor.lightGray, padding: .left(20))
         }else{
             edt_currentpwd.text = ""
             edt_newpwd.text = ""

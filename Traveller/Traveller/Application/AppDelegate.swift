@@ -14,6 +14,7 @@ import GoogleSignIn
 
 var thisuser:UserModel!
 var deviceTokenString: String?
+var language: Language!
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -30,6 +31,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         thisuser = UserModel()
         thisuser.loadUserInfo()
         thisuser.saveUserInfo()
+        
+        language = Language()
+        language.load()
+        
         UserDefault.Sync()
         // for google signin
         GIDSignIn.sharedInstance().clientID = Constants.CLIENT_ID

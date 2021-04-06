@@ -34,7 +34,23 @@ class TripDetailVC: BaseVC {
     @IBOutlet weak var cus_shoes: BEMCheckBox!
     @IBOutlet weak var txv_from_traveler: UITextView!
     @IBOutlet weak var txv_send_traveler: UITextView!
+    @IBOutlet weak var lbl_icanbring: UILabel!
     
+    @IBOutlet weak var lbl_document: UILabel!
+    @IBOutlet weak var lbl_medicine: UILabel!
+    @IBOutlet weak var lbl_makeup: UILabel!
+    @IBOutlet weak var lbl_money: UILabel!
+    @IBOutlet weak var lbl_food: UILabel!
+    @IBOutlet weak var lbl_mobile: UILabel!
+    @IBOutlet weak var lbl_laptop: UILabel!
+    @IBOutlet weak var lbl_electronics: UILabel!
+    @IBOutlet weak var lbl_books: UILabel!
+    @IBOutlet weak var lbl_toys: UILabel!
+    @IBOutlet weak var lbl_clothes: UILabel!
+    @IBOutlet weak var lbl_shoes: UILabel!
+    @IBOutlet weak var lbl_fromtraveler: UILabel!
+    
+    @IBOutlet weak var btn_send: dropShadowDarkButton!
     var one: TravelModel?
     
     override func viewDidLoad() {
@@ -69,12 +85,33 @@ class TripDetailVC: BaseVC {
                 }
             }
             self.txv_from_traveler.text = one.des
-            self.lbl_from.text = "From:" + " " + one.from_location!
-            self.lbl_to.text = "To:" + " " + one.to_location!
+            self.lbl_from.text = language.language == .eng ? "From:" : RUS.FROM + ":" + " " + one.from_location!
+            self.lbl_to.text = language.language == .eng ? "To:" : RUS.TO + ":" + " " + one.to_location!
+            self.lbl_icanbring.text =  language.language == .eng ? "I can bring the following" : RUS.I_CAN_BRING_FOLLOWING
+            
         }
-        self.navigationItem.title = "Trip Details"
+        self.navigationItem.title = language.language == .eng ? "Trip Details" : RUS.TRIP_DETAILS
         self.addLeftButton4NavBar()
         self.txv_send_traveler.contentInset = .init(top: 0, left: 10, bottom: 0, right: 10)
+        
+        self.lbl_document.text = language.language == .eng ? "Document" : RUS.DOCUMENT
+        self.lbl_medicine.text = language.language == .eng ? "Medicine" : RUS.MEDICINE
+        self.lbl_makeup.text = language.language == .eng ? "Makeup" : RUS.MAKEUP
+        self.lbl_money.text = language.language == .eng ? "Money" : RUS.MONEY
+        self.lbl_food.text = language.language == .eng ? "Food" : RUS.FOOD
+        self.lbl_mobile.text = language.language == .eng ? "Mobile" : RUS.MOBILE
+        self.lbl_laptop.text = language.language == .eng ? "Laptop" : RUS.LAPTOP
+        self.lbl_electronics.text = language.language == .eng ? "Electronics" : RUS.ELECTRONICS
+        self.lbl_books.text = language.language == .eng ? "Books" : RUS.BOOKS
+        self.lbl_toys.text = language.language == .eng ? "Toys" : RUS.TOYS
+        self.lbl_clothes.text = language.language == .eng ? "Clothes" : RUS.CLOTHES
+        self.lbl_shoes.text = language.language == .eng ? "Shoes" : RUS.SHOES
+        self.lbl_fromtraveler.text = language.language == .eng ? "From Traveler" : RUS.FROM_TRAVELER
+        
+        self.btn_send.setTitle(language.language == .eng ? "Send" : RUS.SEND, for: .normal)
+        self.txv_send_traveler.delegate = self
+        txv_send_traveler.text = language.language == .eng ? "Write a message to traveler to start chatting" : RUS.WRITE_A_MESSAGE_TO_START_CHATTING
+        txv_send_traveler.textColor = UIColor.darkGray
     }
     
     func addLeftButton4NavBar() {
@@ -118,8 +155,8 @@ class TripDetailVC: BaseVC {
     @IBAction func sendBtnClicked(_ sender: Any) {
         if thisuser.isValid{
             let msg = self.txv_send_traveler.text
-            if msg!.isEmpty{
-                self.showToast("Please input send text")
+            if msg!.isEmpty || msg == "Write a message to traveler to start chatting" || msg == RUS.WRITE_A_MESSAGE_TO_START_CHATTING{
+                self.showToast(language.language == .eng ? "Please inpupt send text" : RUS.PLEASE_INPUT_SEND_TEXT)
                 return
             }else{
                 if let one = self.one{
@@ -201,6 +238,22 @@ class TripDetailVC: BaseVC {
             }
         }else{
             self.showLoginAlert()
+        }
+    }
+}
+
+extension TripDetailVC: UITextViewDelegate{
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == UIColor.darkGray {
+            textView.text = nil
+            textView.textColor = UIColor.black
+        }
+    }
+    
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = language.language == .eng ? "Write a message to traveler to start chatting" : RUS.WRITE_A_MESSAGE_TO_START_CHATTING
+            textView.textColor = UIColor.darkGray
         }
     }
 }

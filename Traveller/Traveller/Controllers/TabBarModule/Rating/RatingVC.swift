@@ -22,6 +22,9 @@ class RatingVC: BaseVC {
     @IBOutlet weak var lbl_reply_time: UILabel!
     @IBOutlet weak var lbl_reviewer_content: UILabel!
     @IBOutlet weak var txv_replycontent: UITextView!
+    @IBOutlet weak var lbl_replytoreview: UILabel!
+    @IBOutlet weak var btn_reply: UIButton!
+    
     var selected_review: ReviewModel?
     
     var reviews = [ReviewModel]()
@@ -35,7 +38,7 @@ class RatingVC: BaseVC {
             setUI()
         }else{
             self.setReplyModal(false, review: nil)
-            self.navigationItem.title = "Rating"
+            self.navigationItem.title = language.language == .eng ? "Rating" : RUS.RATING
             self.lbl_username.text = nil
             self.cus_rating.isHidden = true
             self.tbl_review.isHidden = true
@@ -92,9 +95,11 @@ class RatingVC: BaseVC {
     }
     
     func setUI()  {
-        self.navigationItem.title = "Rating"
+        self.navigationItem.title = language.language == .eng ? "Rating" : RUS.RATING
         self.lbl_username.text = thisuser.first_name! + " " + thisuser.last_name!
         self.setReplyModal(false, review: nil)
+        self.lbl_replytoreview.text = language.language == .eng ? "Reply to Reviewer" : RUS.REPLY_TO_REVIEWER
+        self.btn_reply.setTitle(language.language == .eng ? "Reply" : RUS.REPLY, for: .normal)
     }
     
     func addLeftButton4NavBar() {
@@ -166,8 +171,8 @@ class RatingVC: BaseVC {
     
     @IBAction func replyBtnClicked(_ sender: Any) {
         let reply = self.txv_replycontent.text ?? ""
-        if reply.isEmpty || reply == "Write your reply on reviewer."{
-            self.showAlerMessage(message: "Please write your reply.")
+        if reply.isEmpty || reply == "Write your reply on reviewer." || reply == RUS.WRITE_YOUR_REPLY_ON_REVIEWER{
+            self.showAlerMessage(message: language.language == .eng ? "Write your reply on reviewer." : RUS.WRITE_YOUR_REPLY_ON_REVIEWER)
             return
         }else{
             if let selected_review = self.selected_review{
@@ -266,8 +271,8 @@ extension RatingVC: UITextViewDelegate{
     
     func textViewDidEndEditing(_ textView: UITextView) {
         if textView.text.isEmpty {
-            textView.text = "Write your reply on reviewer."
-            textView.textColor = UIColor.lightGray
+            textView.text = language.language == .eng ? "Write your reply on reviewer." : RUS.WRITE_YOUR_REPLY_ON_REVIEWER
+            textView.textColor = UIColor.darkGray
         }
     }
 }

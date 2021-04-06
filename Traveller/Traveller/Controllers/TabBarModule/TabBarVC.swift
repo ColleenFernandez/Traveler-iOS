@@ -9,6 +9,24 @@
 import UIKit
 
 class TabBarVC: UITabBarController, UITabBarControllerDelegate {
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        guard let items = tabBar.items else { return }
+            if language.language == .eng{
+                items[0].title = "Search"
+                items[1].title = "My trips"
+                items[2].title = "Chat"
+                items[3].title = "Rating"
+                items[4].title = "Profile"
+            }else{
+                items[0].title = RUS.SEARCH
+                items[1].title = RUS.MY_TRIPS
+                items[2].title = RUS.CHAT
+                items[3].title = RUS.RATING
+                items[4].title = RUS.PROFILE
+            }
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()

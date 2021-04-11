@@ -26,9 +26,7 @@ open class ImagePicker1: NSObject {
 
         self.presentationController = presentationController
         self.delegate = delegate
-
         self.pickerController.delegate = self
-
         self.pickerController.allowsEditing = is_cropping
         self.pickerController.mediaTypes = ["public.image"]
     }
@@ -48,17 +46,17 @@ open class ImagePicker1: NSObject {
 
         let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
 
-        if let action = self.action(for: .camera, title: "Take your picture") {
+        if let action = self.action(for: .camera, title: language.language == .eng ? "Take your picture" : "Сфотографируйся") {
             alertController.addAction(action)
         }
 //        if let action = self.action(for: .savedPhotosAlbum, title: "Camera roll") {
 //            alertController.addAction(action)
 //        }
-        if let action = self.action(for: .photoLibrary, title: "Gallery") {
+        if let action = self.action(for: .photoLibrary, title: language.language == .eng ? "Gallery" : "Галерея") {
             alertController.addAction(action)
         }
 
-        alertController.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        alertController.addAction(UIAlertAction(title: language.language == .eng ? "Cancel" : "Отмена", style: .cancel, handler: nil))
 
         if UIDevice.current.userInterfaceIdiom == .pad {
             alertController.popoverPresentationController?.sourceView = sourceView

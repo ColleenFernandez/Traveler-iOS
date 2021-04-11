@@ -21,7 +21,7 @@ class ChatVC: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         let layout: UICollectionViewFlowLayout = UICollectionViewFlowLayout()
-                layout.sectionInset = UIEdgeInsets(top: 20, left: 0, bottom: 10, right: 0)
+                layout.sectionInset = UIEdgeInsets(top: 4, left: 0, bottom: 4, right: 0)
         layout.itemSize = CGSize(width: Constants.SCREEN_WIDTH, height: 100)
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0

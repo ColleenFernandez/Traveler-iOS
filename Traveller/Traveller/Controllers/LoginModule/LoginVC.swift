@@ -50,6 +50,11 @@ class LoginVC: BaseVC{
     }
     
    
+    @IBAction func termsBtnClicked(_ sender: Any) {
+        // goto terms
+        self.gotoWebViewWithProgressBar(Constants.TERMS_LINK, title: language.language == .eng ? "Terms & Condition" : "сроки и условия")
+    }
+    
     @IBAction func englishBtnClicked(_ sender: Any) {
         //TODO: english clicked
         language.set(.eng)

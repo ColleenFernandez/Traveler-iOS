@@ -122,8 +122,7 @@ struct Constants {
     static let SAVE_ROOT_PATH      = "save_root"
     static let SCREEN_HEIGHT       = UIScreen.main.bounds.height
     static let SCREEN_WIDTH        = UIScreen.main.bounds.width
-    static let TERMS_LINK          = "http://mofutomo.com/terms.pdf"
-    static let PRIVACY_LINK        = "http://mofutomo.com/privacy.pdf"
+    static let TERMS_LINK          = "http://tele-ship.com/terms.pdf"
     static let items               = ["Document", "Medicine", "Makeup", "Money", "Food", "Mobile", "Laptop", "Electronics", "Books", "Toys", "Clothes", "Shoes"]
     static let ONE_MIN_TIMESTAMP   = 60 * 1000
     static let ONE_HOUR_TIMESTAMP  = 3600 * 1000

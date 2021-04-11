@@ -12,6 +12,7 @@ import SwiftyJSON
 import MBProgressHUD
 import Foundation
 import IQKeyboardManagerSwift
+import SafariServices
 
 class DarkVC: BaseVC {
     override func viewDidLoad() {
@@ -34,6 +35,21 @@ class BaseVC: UIViewController {
     override func viewDidDisappear(_ animated: Bool) {
         if !(self.hud?.isHidden ?? false){
             self.hideLoadingView()
+        }
+    }
+    
+    func gotoWebViewWithProgressBar(_ link: String, title: String = "")  {
+//        let browser = KAWebBrowser()
+//        browser.str_title = title
+//        show(browser, sender: nil)
+//        browser.loadURLString(link)
+        
+        if let url = URL(string: link) {
+            let controller = SFSafariViewController(url: url, entersReaderIfAvailable: true)
+            //vc.delegate = self
+            controller.dismissButtonStyle = .close
+            controller.configuration.barCollapsingEnabled = true
+            present(controller, animated: true)
         }
     }
    

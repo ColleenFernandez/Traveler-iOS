@@ -19,6 +19,9 @@ class SearchVC: BaseVC {
     
     @IBOutlet weak var tbl_search: UITableView!
     @IBOutlet weak var btn_search: UIButton!
+    @IBOutlet weak var cons_tbl_height: NSLayoutConstraint!
+    
+    
     var from_location: String?
     var to_location: String?
     var start_timestamp: Int?
@@ -62,6 +65,7 @@ class SearchVC: BaseVC {
                             num += 1
                             self.ds_search.append(TravelModel(JSON(one)))
                             if num == array.count{
+                                self.cons_tbl_height.constant = CGFloat(self.ds_search.count * 100)
                                 self.tbl_search.reloadData()
                             }
                         }

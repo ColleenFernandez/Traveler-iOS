@@ -68,6 +68,7 @@
 		05CBF5DA25ECDECA00FFAF44 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 05CBF5D925ECDECA00FFAF44 /* GoogleService-Info.plist */; };
 		05DB517925D56E10001E1481 /* TravelModel&Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05DB517825D56E10001E1481 /* TravelModel&Cell.swift */; };
 		05FB121F25DA400F00A79F22 /* NewTripVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05FB121E25DA400F00A79F22 /* NewTripVC.swift */; };
+		05FCAEB72620A7460062997F /* KAWebBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05FCAEB62620A7460062997F /* KAWebBrowser.swift */; };
 		66D97C90B7F7504C758A1132 /* Pods_Traveller.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E6EEF109C05C4714D1EBE87E /* Pods_Traveller.framework */; };
 /* End PBXBuildFile section */
 
@@ -136,6 +137,7 @@
 		05CBF5D925ECDECA00FFAF44 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		05DB517825D56E10001E1481 /* TravelModel&Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TravelModel&Cell.swift"; sourceTree = "<group>"; };
 		05FB121E25DA400F00A79F22 /* NewTripVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTripVC.swift; sourceTree = "<group>"; };
+		05FCAEB62620A7460062997F /* KAWebBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KAWebBrowser.swift; sourceTree = "<group>"; };
 		94E7FE73B18AA839431C024E /* Pods-Traveller.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Traveller.debug.xcconfig"; path = "Target Support Files/Pods-Traveller/Pods-Traveller.debug.xcconfig"; sourceTree = "<group>"; };
 		D450B71ED16E2EE5DD876E97 /* Pods-Traveller.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Traveller.release.xcconfig"; path = "Target Support Files/Pods-Traveller/Pods-Traveller.release.xcconfig"; sourceTree = "<group>"; };
 		E6EEF109C05C4714D1EBE87E /* Pods_Traveller.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Traveller.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -233,6 +235,7 @@
 			isa = PBXGroup;
 			children = (
 				05011BE125EE87B7000C365B /* Traveller.entitlements */,
+				05FCAEB32620A7370062997F /* Vendor */,
 				057D714225D4BC9D001C4250 /* Application */,
 				057D714925D4BCF3001C4250 /* Controllers */,
 				057D714A25D4BCFD001C4250 /* Utils */,
@@ -359,6 +362,30 @@
 				055A06CE25EEB77A0093F413 /* ForgotVC.swift */,
 			);
 			path = LoginModule;
+			sourceTree = "<group>";
+		};
+		05FCAEB32620A7370062997F /* Vendor */ = {
+			isa = PBXGroup;
+			children = (
+				05FCAEB42620A7460062997F /* KAWebBrowser */,
+			);
+			path = Vendor;
+			sourceTree = "<group>";
+		};
+		05FCAEB42620A7460062997F /* KAWebBrowser */ = {
+			isa = PBXGroup;
+			children = (
+				05FCAEB52620A7460062997F /* Classes */,
+			);
+			path = KAWebBrowser;
+			sourceTree = "<group>";
+		};
+		05FCAEB52620A7460062997F /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				05FCAEB62620A7460062997F /* KAWebBrowser.swift */,
+			);
+			path = Classes;
 			sourceTree = "<group>";
 		};
 		198DE10997B0A5A96CC3DB55 /* Frameworks */ = {
@@ -568,6 +595,7 @@
 				057D717B25D4D265001C4250 /* Data+Extension.swift in Sources */,
 				057D717A25D4D265001C4250 /* CommonUtils.swift in Sources */,
 				057D717625D4D265001C4250 /* UIImage+GIF.swift in Sources */,
+				05FCAEB72620A7460062997F /* KAWebBrowser.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

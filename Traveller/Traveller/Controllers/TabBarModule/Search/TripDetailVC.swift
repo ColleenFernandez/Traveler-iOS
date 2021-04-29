@@ -85,8 +85,8 @@ class TripDetailVC: BaseVC {
                 }
             }
             self.txv_from_traveler.text = one.des
-            self.lbl_from.text = language.language == .eng ? "From:" : RUS.FROM + ":" + " " + one.from_location!
-            self.lbl_to.text = language.language == .eng ? "To:" : RUS.TO + ":" + " " + one.to_location!
+            self.lbl_from.text = language.language == .eng ? "From:" + " " + one.from_location! : RUS.FROM + ":" + " " + one.from_location!
+            self.lbl_to.text = language.language == .eng ? "To:" + " " + one.to_location! : RUS.TO + ":" + " " + one.to_location!
             self.lbl_icanbring.text =  language.language == .eng ? "I can bring the following" : RUS.I_CAN_BRING_FOLLOWING
             
         }

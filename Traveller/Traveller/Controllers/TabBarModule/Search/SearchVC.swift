@@ -26,6 +26,12 @@ class SearchVC: BaseVC {
     var to_location: String?
     var start_timestamp: Int?
     var end_timestamp: Int?
+    var from_id: String?
+    var to_id: String?
+    var from_is_country:  Int = 0
+    var to_is_country:  Int = 0
+    var from_country: String?
+    var to_country: String?
     var ds_search = [TravelModel]()
     
     var selected_field = 0 // 1: from 2: to
@@ -37,24 +43,13 @@ class SearchVC: BaseVC {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        setDataSource(from_location: nil, to_location: nil, from_date: nil, to_date: nil)
+        setDataSource(from_location: nil, to_location: nil, from_date: nil, to_date: nil, from_id: nil, to_id: nil, from_is_country: 0,to_is_country: 0, from_country: nil , to_country: nil)
     }
     
-    func setDataSource( from_location: String?, to_location: String?, from_date: Int?, to_date: Int?)  {
-        /**for i in 0 ..< TestData.user_images.count{
-            var items = TestData.items
-            for ii in 0 ..< 6{
-                let index = (i + ii) % 10
-                if index < items.count{
-                    items.remove(at:index )
-                }
-            }
-            
-            self.ds_search.append(TravelModel(travel_id: i, usermodel: UserModel(user_id: i, first_name: TestData.userNames[i], last_name: TestData.userNames[(i + 1) % 10], user_photo: TestData.user_images[i], user_email: TestData.userEmails[i], password: "", rating: TestData.rating[i], birthday: TestData.post_times[i] * 1000, phone_number: "123456789"), travel_time: Int64(TestData.post_times[i] * 1000), weight: Float(TestData.weight[i]), price: TestData.price[i], items: items, des: TestData.des[i], from_location: TestData.userLocation[i], to_location: TestData.userLocation[(i + 1) % 10]))
-        }*/
+    func setDataSource( from_location: String?, to_location: String?, from_date: Int?, to_date: Int?, from_id: String?, to_id: String?, from_is_country: Int,to_is_country: Int, from_country: String?, to_country: String?)  {
         self.ds_search.removeAll()
         self.showLoadingView(vc: self)
-        ApiManager.getTravel(from_location: from_location, to_location: to_location, from_date: from_date, to_date: to_date) { (isSuccess, data) in
+        ApiManager.getTravel(from_location: from_location, to_location: to_location, from_date: from_date, to_date: to_date, from_id: from_id, to_id: to_id, from_is_country:from_is_country, to_is_country: to_is_country, from_country: from_country, to_country: to_country) { (isSuccess, data) in
             self.hideLoadingView()
             if isSuccess{
                 let data = JSON(data as Any)
@@ -67,10 +62,28 @@ class SearchVC: BaseVC {
                             if num == array.count{
                                 self.cons_tbl_height.constant = CGFloat(self.ds_search.count * 100)
                                 self.tbl_search.reloadData()
+                                self.from_location = nil
+                                self.to_location = nil
+                                self.from_id = nil
+                                self.to_id = nil
+                                self.from_is_country = 0
+                                self.to_is_country = 0
+                                self.from_country = nil
+                                self.to_country = nil
+                                self.edt_flyingto.text = nil
+                                self.edt_flyingfrom.text = nil
                             }
                         }
                     }else{
                         self.tbl_search.reloadData()
+                        self.from_location = nil
+                        self.to_location = nil
+                        self.from_id = nil
+                        self.to_id = nil
+                        self.from_is_country = 0
+                        self.to_is_country = 0
+                        self.edt_flyingto.text = nil
+                        self.edt_flyingfrom.text = nil
                     }
                 }
             }
@@ -145,7 +158,9 @@ class SearchVC: BaseVC {
         edt_flyingfrom.resignFirstResponder()
         let acController = GMSAutocompleteViewController()
         acController.delegate = self
-        
+        /*let filter = GMSAutocompleteFilter()
+        filter.type = GMSPlacesAutocompleteTypeFilter.city
+        acController.autocompleteFilter = filter*/
         
         present(acController, animated: true, completion: nil)
     }
@@ -155,46 +170,72 @@ class SearchVC: BaseVC {
         edt_flyingto.resignFirstResponder()
         let acController = GMSAutocompleteViewController()
         acController.delegate = self
+        /*let filter = GMSAutocompleteFilter()
+        filter.type = GMSPlacesAutocompleteTypeFilter.city
+        acController.autocompleteFilter = filter*/
         present(acController, animated: true, completion: nil)
     }
+    
     @IBAction func searchBtnClicked(_ sender: Any) {
-        
-        /*DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-            self.hideLoadingView()
-            for i in 0 ... 6{
-                let index = Int.random(in: 0 ... 9)
-                if index < self.ds_search.count{
-                    self.ds_search.remove(at: index)
-                }
-            }
-            self.tbl_search.reloadData()
-        }*/
         self.from_location = self.edt_flyingfrom.text
         self.to_location = self.edt_flyingto.text
-        print(from_location ?? "null", to_location ?? "null", start_timestamp ?? -1, end_timestamp ?? -1)
-        setDataSource(from_location: self.from_location, to_location: self.to_location, from_date: self.start_timestamp, to_date: self.end_timestamp)
+        setDataSource(from_location: self.from_location, to_location: self.to_location, from_date: self.start_timestamp, to_date: self.end_timestamp, from_id: self.from_id, to_id: self.to_id, from_is_country: self.from_is_country, to_is_country: self.to_is_country, from_country: self.from_country, to_country: self.to_country)
     }
     @IBAction func refreshBtnClicked(_ sender: Any) {
-        self.edt_flyingfrom.text = ""
-        self.edt_flyingto.text = ""
-        self.edt_fromdate.text = ""
-        self.edt_todate.text = ""
+        self.edt_flyingfrom.text = nil
+        self.edt_flyingto.text = nil
+        self.edt_fromdate.text = nil
+        self.edt_todate.text = nil
         self.from_location = nil
         self.to_location = nil
         self.start_timestamp = nil
         self.end_timestamp = nil
-        setDataSource(from_location: nil, to_location: nil, from_date: nil, to_date: nil)
+        setDataSource(from_location: nil, to_location: nil, from_date: nil, to_date: nil, from_id: nil, to_id: nil, from_is_country: 0,to_is_country: 0, from_country: nil, to_country: nil)
     }
 }
 
 extension SearchVC : GMSAutocompleteViewControllerDelegate {
   func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
     
-    print(place)
     if selected_field == 1{
         edt_flyingfrom.text = place.formattedAddress
+        self.from_id = place.placeID
+        if place.addressComponents?.first?.types.first == "country"{
+            self.from_is_country = 1
+            if let addressComponents = place.addressComponents{
+                for one in addressComponents{
+                    for two in one.types{
+                        if two == "country"{
+                            print(one.shortName ?? "")
+                            self.from_country = one.shortName
+                            break
+                        }
+                    }
+                }
+            }
+        }else{
+            self.from_is_country = 0
+        }
+        //print(place.attributions)
     }else if selected_field == 2{
         edt_flyingto.text = place.formattedAddress
+        self.to_id = place.placeID
+        if place.addressComponents?.first?.types.first == "country"{
+            self.to_is_country = 1
+            if let addressComponents = place.addressComponents{
+                for one in addressComponents{
+                    for two in one.types{
+                        if two == "country"{
+                            print(one.shortName ?? "")
+                            self.to_country = one.shortName
+                            break
+                        }
+                    }
+                }
+            }
+        }else{
+            self.to_is_country = 0
+        }
     }else{
         print("default")
     }

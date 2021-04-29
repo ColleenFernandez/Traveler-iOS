@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		050CC60D2633135300B022DB /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 050CC60C2633135300B022DB /* GoogleService-Info.plist */; };
 		051ED88325DC47C400B34D08 /* EmailLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051ED88225DC47C400B34D08 /* EmailLoginVC.swift */; };
 		0530E15525DA5005008765F2 /* MessageSendVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0530E15425DA5005008765F2 /* MessageSendVC.swift */; };
 		0530E17E25DA5372008765F2 /* AllChatModel&Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0530E17D25DA5372008765F2 /* AllChatModel&Cell.swift */; };
@@ -65,7 +66,6 @@
 		057D71A625D4D2E1001C4250 /* SignUpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 057D71A125D4D2E1001C4250 /* SignUpVC.swift */; };
 		057D71A725D4D2E1001C4250 /* SplashVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 057D71A225D4D2E1001C4250 /* SplashVC.swift */; };
 		0598DF0E25D64E0B00B85BEC /* TripDetailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0598DF0D25D64E0B00B85BEC /* TripDetailVC.swift */; };
-		05CBF5DA25ECDECA00FFAF44 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 05CBF5D925ECDECA00FFAF44 /* GoogleService-Info.plist */; };
 		05DB517925D56E10001E1481 /* TravelModel&Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05DB517825D56E10001E1481 /* TravelModel&Cell.swift */; };
 		05FB121F25DA400F00A79F22 /* NewTripVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05FB121E25DA400F00A79F22 /* NewTripVC.swift */; };
 		05FCAEB72620A7460062997F /* KAWebBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05FCAEB62620A7460062997F /* KAWebBrowser.swift */; };
@@ -74,6 +74,7 @@
 
 /* Begin PBXFileReference section */
 		05011BE125EE87B7000C365B /* Traveller.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Traveller.entitlements; sourceTree = "<group>"; };
+		050CC60C2633135300B022DB /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		051ED88225DC47C400B34D08 /* EmailLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmailLoginVC.swift; sourceTree = "<group>"; };
 		0530E15425DA5005008765F2 /* MessageSendVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageSendVC.swift; sourceTree = "<group>"; };
 		0530E17D25DA5372008765F2 /* AllChatModel&Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AllChatModel&Cell.swift"; sourceTree = "<group>"; };
@@ -134,7 +135,6 @@
 		057D71A125D4D2E1001C4250 /* SignUpVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpVC.swift; sourceTree = "<group>"; };
 		057D71A225D4D2E1001C4250 /* SplashVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashVC.swift; sourceTree = "<group>"; };
 		0598DF0D25D64E0B00B85BEC /* TripDetailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripDetailVC.swift; sourceTree = "<group>"; };
-		05CBF5D925ECDECA00FFAF44 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		05DB517825D56E10001E1481 /* TravelModel&Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "TravelModel&Cell.swift"; sourceTree = "<group>"; };
 		05FB121E25DA400F00A79F22 /* NewTripVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTripVC.swift; sourceTree = "<group>"; };
 		05FCAEB62620A7460062997F /* KAWebBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KAWebBrowser.swift; sourceTree = "<group>"; };
@@ -245,7 +245,7 @@
 				057D714525D4BCC2001C4250 /* StoryBoards&Assests */,
 				057D714425D4BCB9001C4250 /* View */,
 				057D712F25D46C23001C4250 /* Info.plist */,
-				05CBF5D925ECDECA00FFAF44 /* GoogleService-Info.plist */,
+				050CC60C2633135300B022DB /* GoogleService-Info.plist */,
 			);
 			path = Traveller;
 			sourceTree = "<group>";
@@ -466,7 +466,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				057D712E25D46C23001C4250 /* LaunchScreen.storyboard in Resources */,
-				05CBF5DA25ECDECA00FFAF44 /* GoogleService-Info.plist in Resources */,
+				050CC60D2633135300B022DB /* GoogleService-Info.plist in Resources */,
 				057D712B25D46C23001C4250 /* Assets.xcassets in Resources */,
 				057D712925D46C22001C4250 /* Main.storyboard in Resources */,
 			);
@@ -744,6 +744,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Traveller/Traveller.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = X6FG82HC5F;
 				INFOPLIST_FILE = Traveller/Info.plist;
@@ -753,6 +754,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.samer.alzeer1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -765,6 +767,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Traveller/Traveller.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = X6FG82HC5F;
 				INFOPLIST_FILE = Traveller/Info.plist;
@@ -774,6 +777,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.samer.alzeer1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

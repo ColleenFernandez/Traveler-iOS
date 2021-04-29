@@ -461,7 +461,7 @@ class MessageSendVC: UIViewController {
                 chatObject["photo"]       = thisuser.user_photo
                 chatObject["sender_id"]   = "\(thisuser.user_id ?? 0)"
                 chatObject["time"]        = "\(timeNow)" as String
-                chatObject["name"]        = thisuser.first_name! + thisuser.last_name!
+                chatObject["name"]        = thisuser.first_name! + " " + thisuser.last_name!
                 
                 FirebaseAPI.sendMessage(chatObject, chatroom_id) { (status, message) in
                     if status {
@@ -494,7 +494,7 @@ class MessageSendVC: UIViewController {
                                     listObject1["message"]     = "Sent gif"
                                 }
                                 listObject1["sender_id"]       = me_id
-                                listObject1["sender_name"]     = thisuser.username
+                                listObject1["sender_name"]     = thisuser.first_name! + " " + thisuser.last_name!
                                 listObject1["sender_photo"]    = thisuser.user_photo
                                 listObject1["time"]            = "\(timeNow)" as String
                                

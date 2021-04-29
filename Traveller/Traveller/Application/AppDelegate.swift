@@ -25,6 +25,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         IQKeyboardManager.shared.enableAutoToolbar = false
         
         GMSPlacesClient.provideAPIKey(PLACE_API_KEY)
+        
 
         FirebaseApp.configure()
         

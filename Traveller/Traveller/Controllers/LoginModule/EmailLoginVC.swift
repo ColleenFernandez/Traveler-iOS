@@ -7,7 +7,7 @@
 
 import UIKit
 
-class EmailLoginVC: BaseVC {
+class EmailLoginVC: BaseVC, UITextFieldDelegate {
 
     @IBOutlet weak var edt_email: UITextField!
     @IBOutlet weak var edt_password: UITextField!
@@ -21,6 +21,7 @@ class EmailLoginVC: BaseVC {
     }
     
     func setUI() {
+        self.edt_password.delegate = self
         if language.language == .eng{
             setEdtPlaceholder(edt_email, placeholderText:"Email", placeColor: UIColor.lightGray, padding: .left(20))
             setEdtPlaceholder(edt_password, placeholderText:"Password", placeColor: UIColor.lightGray, padding: .left(20))
@@ -34,6 +35,67 @@ class EmailLoginVC: BaseVC {
             self.btn_login.setTitle(RUS.LOGIN, for: .normal)
             self.lbl_back.text = RUS.BACK
         }
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        let email = self.edt_email.text ?? ""
+        let password = self.edt_password.text ?? ""
+        
+        if email.isEmpty{
+            if language.language == .eng{
+                self.showToastCenter("Please input your email")
+            }else{
+                self.showToastCenter(RUS.PLEASE_INPUT_YOUR_EMAIL)
+            }
+            return true
+        }
+        if !email.isValidEmail(){
+            if language.language == .eng{
+                self.showToastCenter("Please input your valid email")
+            }else{
+                self.showToastCenter(RUS.PLEASE_INPUT_YOUR_VALID_EMAIL)
+            }
+            return true
+        }
+        
+        if password.isEmpty{
+            if language.language == .eng{
+                self.showToastCenter("Please input your password")
+            }else{
+                self.showToastCenter(RUS.PLEASE_INPUT_YOUR_PASSWORD)
+            }
+            return true
+        }else{
+            self.showLoadingView(vc: self)
+            ApiManager.signin(email: email, password: password) { (isSuccess, data) in
+                self.hideLoadingView()
+                if isSuccess{
+                    self.gotoTabControllerWithIndex(0)
+                }else{
+                    if let msg = data as? String{
+                        if msg == "User doesn't exist"{
+                            if language.language == .eng{
+                                self.showAlerMessage(message: msg)
+                            }else{
+                                self.showAlerMessage(message: RUS.USER_DON_T_EXIST)
+                            }
+                        }else{
+                            if language.language == .eng{
+                                self.showAlerMessage(message: msg)
+                            }else{
+                                self.showAlerMessage(message: RUS.INCORRECT_PASSWORD)
+                            }
+                        }
+                    }
+                }
+            }
+            /**DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                self.hideLoadingView()
+                self.gotoTabControllerWithIndex(0)
+            }*/
+        }
+        textField.resignFirstResponder()
+        return false
     }
     
     @IBAction func loginBtnClicked(_ sender: Any) {

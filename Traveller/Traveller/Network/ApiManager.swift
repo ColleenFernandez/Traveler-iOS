@@ -13,7 +13,7 @@ import SwiftyJSON
                             // Travaler project //
 // ************************************************************************//
 
-//let SERVER_URL = "http://192.168.101.99/traveler/api/"
+//let SERVER_URL = "http://192.168.101.12/traveler/api/"
 let SERVER_URL = "http://54.228.79.46/index.php/api/"
 
 let SUCCESSTRUE = 200
@@ -235,7 +235,7 @@ class ApiManager {
         }
     }
     
-    class func getTravel(from_location: String?,to_location: String?,from_date: Int?,to_date: Int?, completion :  @escaping (_ success: Bool, _ response : Any?) -> ()) {
+    class func getTravel(from_location: String?,to_location: String?,from_date: Int?,to_date: Int?,from_id: String?, to_id: String?,from_is_country: Int,to_is_country: Int, from_country: String?, to_country: String? ,completion :  @escaping (_ success: Bool, _ response : Any?) -> ()) {
         var params = [String: Any]()
         if let user_id = thisuser.user_id{
             params[PARAMS.USER_ID] = user_id
@@ -252,6 +252,23 @@ class ApiManager {
         if let to_date = to_date{
             params[PARAMS.TO_DATE] = to_date
         }
+        
+        if let from_id = from_id{
+            params["from_id"] = from_id
+        }
+        if let to_id = to_id{
+            params["to_id"] = to_id
+        }
+        
+        if let from_country = from_country{
+            params["from_country"] = from_country
+        }
+        if let to_country = to_country{
+            params["to_country"] = to_country
+        }
+        
+        params["from_is_country"] = from_is_country
+        params["to_is_country"] = to_is_country
         
         Alamofire.request(SERVER_URL + "getTravel", method:.post, parameters:params)
         .responseJSON { response in
@@ -289,9 +306,8 @@ class ApiManager {
         }
     }
     
-    class func createTravel(travel_time: Int, weight: Float, price: Int, items: String, des: String, from_location: String,to_location: String, completion :  @escaping (_ success: Bool, _ response : Any?) -> ()) {
-        let params = [PARAMS.USER_ID: thisuser.user_id ?? -1, PARAMS.TRAVEL_TIME: travel_time, PARAMS.WEIGHT: weight, PARAMS.PRICE: price, PARAMS.ITEMS: items, PARAMS.DES
-                        : des ,PARAMS.FROM_LOCATION : from_location, PARAMS.TO_LOCATION: to_location ] as [String : Any]
+    class func createTravel(travel_time: Int, weight: Float, price: Int, items: String, des: String, from_location: String,to_location: String,from_id: String,to_id: String,from_country: String,to_country: String,  completion :  @escaping (_ success: Bool, _ response : Any?) -> ()) {
+        let params = [PARAMS.USER_ID: thisuser.user_id ?? -1, PARAMS.TRAVEL_TIME: travel_time, PARAMS.WEIGHT: weight, PARAMS.PRICE: price, PARAMS.ITEMS: items, PARAMS.DES: des ,PARAMS.FROM_LOCATION : from_location, PARAMS.TO_LOCATION: to_location, "from_id":from_id, "to_id": to_id, "from_country" : from_country, "to_country": to_country] as [String : Any]
         Alamofire.request(SERVER_URL + "createTravel", method:.post, parameters:params)
         .responseJSON { response in
             switch response.result {

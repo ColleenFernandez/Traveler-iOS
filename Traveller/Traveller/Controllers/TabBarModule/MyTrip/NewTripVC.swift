@@ -50,11 +50,28 @@ class NewTripVC: BaseVC {
     @IBOutlet weak var lbl_icanbring: UILabel!
     @IBOutlet weak var btn_save_trip: dropShadowDarkButton!
     
+    var is_document_check: Bool = false
+    var is_medicine_check: Bool = false
+    var is_makeup_check: Bool = false
+    var is_money_check: Bool = false
+    var is_food_check: Bool = false
+    var is_mobile_check: Bool = false
+    var is_laptop_check: Bool = false
+    var is_electronices_check: Bool = false
+    var is_books_check: Bool = false
+    var is_toys_check: Bool = false
+    var is_clothes_check: Bool = false
+    var is_shoes_check: Bool = false
+    
     var selected_field = 0 // 1: from 2: to
     var date_timestamp: Int?
     var start_timestamp: Int?
     var check_boxs = [BEMCheckBox]()
     var is_selectall =  false
+    var from_id: String = ""
+    var to_id: String = ""
+    var from_country: String = ""
+    var to_country: String = ""
     override func viewDidLoad() {
         super.viewDidLoad()
     }
@@ -98,13 +115,76 @@ class NewTripVC: BaseVC {
         self.btn_save_trip.setTitle(language.language == .eng ? "Save Trip" : RUS.SAVE_TRIP, for: .normal)
     }
     
-    @IBAction func selectAllBtnClicked(_ sender: Any) {
+    @IBAction func checkallBtnClicked(_ sender: Any) {
         self.is_selectall = !self.is_selectall
+        setCheckBox(self.cus_selectall, checked: self.is_selectall)
         check_boxs = [cus_document, cus_medicine, cus_makeup,cus_money, cus_food, cus_mobile,  cus_laptop, cus_electroinics, cus_books, cus_toys,   cus_clothes,cus_shoes]
         for one in check_boxs{
             setCheckBox(one, checked: self.is_selectall)
         }
     }
+    
+    @IBAction func docBtnClicked(_ sender: Any) {
+        self.is_document_check = !self.is_document_check
+        setCheckBox(self.cus_document, checked: self.is_document_check)
+    }
+    
+    @IBAction func medicineBtnClicked(_ sender: Any) {
+        self.is_medicine_check = !self.is_medicine_check
+        setCheckBox(self.cus_medicine, checked: self.is_medicine_check)
+    }
+    
+    @IBAction func makeupBtnClicked(_ sender: Any) {
+        self.is_makeup_check = !self.is_makeup_check
+        setCheckBox(self.cus_makeup, checked: self.is_makeup_check)
+    }
+    
+    @IBAction func moneyBtnClicked(_ sender: Any) {
+        self.is_money_check = !self.is_money_check
+        setCheckBox(self.cus_money, checked: self.is_money_check)
+    }
+    
+    @IBAction func foodBtnClicked(_ sender: Any) {
+        self.is_food_check = !self.is_food_check
+        setCheckBox(self.cus_food, checked: self.is_food_check)
+    }
+    
+    @IBAction func mobileBtnClicked(_ sender: Any) {
+        self.is_mobile_check = !self.is_mobile_check
+        setCheckBox(self.cus_mobile, checked: self.is_mobile_check)
+    }
+    
+    @IBAction func laptopBtnClicked(_ sender: Any) {
+        self.is_laptop_check = !self.is_laptop_check
+        setCheckBox(self.cus_laptop, checked: self.is_laptop_check)
+    }
+    
+    @IBAction func electronicsBtnClicked(_ sender: Any) {
+        self.is_electronices_check = !self.is_electronices_check
+        setCheckBox(self.cus_electroinics, checked: self.is_electronices_check)
+    }
+    
+    @IBAction func booksBtnClicked(_ sender: Any) {
+        self.is_books_check = !self.is_books_check
+        setCheckBox(self.cus_books, checked: self.is_books_check)
+    }
+    
+    @IBAction func toysBtnClicked(_ sender: Any) {
+        self.is_toys_check = !self.is_toys_check
+        setCheckBox(self.cus_toys, checked: self.is_toys_check)
+    }
+    
+    @IBAction func clothesBtnClicked(_ sender: Any) {
+        self.is_clothes_check = !self.is_clothes_check
+        setCheckBox(self.cus_clothes, checked: self.is_clothes_check)
+    }
+    
+    @IBAction func shoesBtnClicked(_ sender: Any) {
+        self.is_shoes_check = !self.is_shoes_check
+        setCheckBox(self.cus_shoes, checked: self.is_shoes_check)
+    }
+    
+    
     
     func addLeftButton4NavBar() {
         // if needed i will add
@@ -216,6 +296,11 @@ class NewTripVC: BaseVC {
         edt_flyingfrom.resignFirstResponder()
         let acController = GMSAutocompleteViewController()
         acController.delegate = self
+        
+//        let filter = GMSAutocompleteFilter()
+//        filter.type = GMSPlacesAutocompleteTypeFilter.city
+//        acController.autocompleteFilter = filter
+        
         present(acController, animated: true, completion: nil)
     }
     
@@ -224,6 +309,11 @@ class NewTripVC: BaseVC {
         edt_flyingto.resignFirstResponder()
         let acController = GMSAutocompleteViewController()
         acController.delegate = self
+        
+//        let filter = GMSAutocompleteFilter()
+//        filter.type = GMSPlacesAutocompleteTypeFilter.city
+//        acController.autocompleteFilter = filter
+        
         present(acController, animated: true, completion: nil)
     }
     
@@ -275,7 +365,7 @@ class NewTripVC: BaseVC {
             return
         }else{
             self.showLoadingView(vc: self)
-            ApiManager.createTravel(travel_time: self.start_timestamp ?? Int(NSDate().timeIntervalSince1970 * 1000), weight: weight.toFloat() ?? 0.0, price: price.toInt() ?? 0, items: items.joined(separator: ","), des: des, from_location: from_location, to_location: to_location) { (isSuccess, data) in
+            ApiManager.createTravel(travel_time: self.start_timestamp ?? Int(NSDate().timeIntervalSince1970 * 1000), weight: weight.toFloat() ?? 0.0, price: price.toInt() ?? 0, items: items.joined(separator: ","), des: des, from_location: from_location, to_location: to_location, from_id: self.from_id, to_id:self.to_id, from_country: from_country, to_country: self.to_country) { (isSuccess, data) in
                 self.hideLoadingView()
                 if isSuccess{
                     self.navigationController?.popViewController(animated: true)
@@ -291,10 +381,35 @@ class NewTripVC: BaseVC {
 
 extension NewTripVC : GMSAutocompleteViewControllerDelegate {
   func viewController(_ viewController: GMSAutocompleteViewController, didAutocompleteWith place: GMSPlace) {
+    
     if selected_field == 1{
         edt_flyingfrom.text = place.formattedAddress
+        self.from_id = place.placeID ?? ""
+        if let addressComponents = place.addressComponents{
+            for one in addressComponents{
+                for two in one.types{
+                    if two == "country"{
+                        print(one.shortName ?? "")
+                        self.from_country = one.shortName ?? ""
+                        break
+                    }
+                }
+            }
+        }
     }else if selected_field == 2{
         edt_flyingto.text = place.formattedAddress
+        self.to_id = place.placeID ?? ""
+        if let addressComponents = place.addressComponents{
+            for one in addressComponents{
+                for two in one.types{
+                    if two == "country"{
+                        print(one.shortName ?? "")
+                        self.to_country = one.shortName ?? ""
+                        break
+                    }
+                }
+            }
+        }
     }else{
         print("default")
     }

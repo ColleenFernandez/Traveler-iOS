@@ -85,6 +85,7 @@ class MyTripDetail: BaseVC {
                     }
                 }
             }
+            
             self.txv_from_traveler.text = one.des
             self.lbl_from.text = "From:" + " " + one.from_location!
             self.lbl_to.text = "To:" + " " + one.to_location!

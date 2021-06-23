@@ -14,7 +14,6 @@ import Foundation
 import FirebaseStorage
 import FirebaseDatabase
 import Photos
-
 import Kingfisher
 import MBProgressHUD
 import IQKeyboardManagerSwift
@@ -26,9 +25,7 @@ class MessageSendVC: UIViewController {
     @IBOutlet weak var tbl_Chat: UITableView!
     @IBOutlet weak var uiv_postView: UIView!
     @IBOutlet weak var imv_Post: UIImageView!
-    
     @IBOutlet weak var uiv_msgSend: UIView!
-    
     //@IBOutlet weak var cons_edtMessageSend: NSLayoutConstraint!
     @IBOutlet weak var uiv_dlg: UIView!
     // from other controller

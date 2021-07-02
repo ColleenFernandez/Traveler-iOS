@@ -17,6 +17,7 @@ import Photos
 import Kingfisher
 import MBProgressHUD
 import IQKeyboardManagerSwift
+import Alamofire
 
 @available(iOS 11.0, *)
 class MessageSendVC: UIViewController {
@@ -72,7 +73,11 @@ class MessageSendVC: UIViewController {
     var partnerListroomId = ""
     // set flag for current chatting
     var is_current_block = false
+    var animator = CPImageViewerAnimator()
     
+    // edit part
+    var edt_index: Int = 0
+    var is_edit = false
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -96,13 +101,14 @@ class MessageSendVC: UIViewController {
         IQKeyboardManager.shared.enable = false
         self.iskeyboardshow = false
         self.is_current_block = false
-        self.navigationItem.title = self.partner_model.username
+        self.navigationItem.title = self.partner_model.first_name! + " " +  self.partner_model.last_name!
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setupUI()
         self.setTableView()
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -233,6 +239,9 @@ class MessageSendVC: UIViewController {
         self.tbl_Chat.allowsSelection = true
         self.tbl_Chat.separatorStyle = .none
         self.tbl_Chat.estimatedRowHeight = 80
+        let longPress = UILongPressGestureRecognizer(target: self, action: #selector(longpress))
+        tbl_Chat.addGestureRecognizer(longPress)
+        
     }
     
     /*func setUnreadMessageNum4me(){
@@ -245,6 +254,33 @@ class MessageSendVC: UIViewController {
             }
         })
     }*/
+    
+    @objc func longpress(sender: UILongPressGestureRecognizer) {
+        if sender.state == UIGestureRecognizer.State.began {
+            let touchPoint = sender.location(in: tbl_Chat)
+            if let indexPath = tbl_Chat.indexPathForRow(at: touchPoint) {
+                // TODO: here set new edit and delete message from list
+                if self.msgdataSource[indexPath.section].me{
+                    let actionSheet = UIAlertController(title: language.language == .eng ? "Message Operation" : "сообщение операция", message: nil, preferredStyle: .actionSheet)
+                    if self.msgdataSource[indexPath.section].image == ""{
+                        actionSheet.addAction(UIAlertAction(title: language.language == .eng ? "Edit" : "редактировать" , style: .default, handler: { (action) -> Void in
+                            // edit action
+                            self.edt_msgSend.text = self.msgdataSource[indexPath.section].msgContent
+                            self.is_edit = true
+                            self.edt_index = indexPath.section
+                        }))
+                    }
+                    actionSheet.addAction(UIAlertAction(title:language.language == .eng ? "Remove" : "Удалить" , style: .default, handler: { (action) -> Void in
+                        Database.database().reference().child("message").child(self.chatroom_id).child(self.msgdataSource[indexPath.section].msg_id).removeValue()
+                        self.msgdataSource.remove(at: indexPath.section)
+                        self.tbl_Chat.reloadData()
+                    }))
+                    actionSheet.addAction(UIAlertAction(title: language.language == .eng ? "Cancel" : "отменить" , style: .cancel, handler: nil))
+                    self.present(actionSheet, animated: true, completion: nil)
+                }
+            }
+        }
+    }
     
     func setOnlinestatus4me()  {
         pathStatus.child(mestatusroomID).removeValue()
@@ -393,34 +429,54 @@ class MessageSendVC: UIViewController {
     }*/
     
     @IBAction func sendAction(_ sender: Any) {
-        if checkValid() {
-            /**self.getPartnerTotalMessageAndBlockState { (isSuccess, num, isBlock) in
-                if isSuccess{
-                    self.messageNum = num.toInt() ?? 0
-                    self.isBlock = isBlock
-                    //print("messageNum==>",self.messageNum)
-                    self.getPartnerOnlineStatus { (isSuccess, online) in
-                        if isSuccess{
-                            //print("successstate==>",online)
-                            let msgcontent = self.edt_msgSend.text!
-                            self.edt_msgSend.text! = ""
-                            self.doSend(online, msgtype: .text, attachment: msgcontent)
-                        }else{
-                            //print("failedstate===>",online)
-                            //self.showToast("Network issue")
+        if is_edit{
+            var chatObject = [String: String]()
+            // MARK: for message object for partner - chatObject
+            chatObject["message"]     = edt_msgSend.text ?? ""
+            chatObject["image"]       = ""
+            chatObject["photo"]       = thisuser.user_photo
+            chatObject["sender_id"]   = "\(thisuser.user_id ?? 0)"
+            chatObject["time"]        = self.msgdataSource[self.edt_index].timestamp
+            chatObject["name"]        = thisuser.first_name! + " " + thisuser.last_name!
+            
+            Database.database().reference().child("message").child(self.chatroom_id).child(self.msgdataSource[self.edt_index].msg_id).setValue(chatObject)
+            self.msgdataSource[edt_index].msgContent = edt_msgSend.text ?? ""
+            
+            self.edt_msgSend.text = nil
+            self.edt_index = 0
+            self.is_edit = false
+            
+            self.tbl_Chat.reloadData()
+        }else{
+            if checkValid() {
+                /**self.getPartnerTotalMessageAndBlockState { (isSuccess, num, isBlock) in
+                    if isSuccess{
+                        self.messageNum = num.toInt() ?? 0
+                        self.isBlock = isBlock
+                        //print("messageNum==>",self.messageNum)
+                        self.getPartnerOnlineStatus { (isSuccess, online) in
+                            if isSuccess{
+                                //print("successstate==>",online)
+                                let msgcontent = self.edt_msgSend.text!
+                                self.edt_msgSend.text! = ""
+                                self.doSend(online, msgtype: .text, attachment: msgcontent)
+                            }else{
+                                //print("failedstate===>",online)
+                                //self.showToast("Network issue")
+                            }
                         }
                     }
-                }
-            }*/
-            self.getPartnerOnlineStatus { (isSuccess, online) in
-                if isSuccess{
-                    //print("successstate==>",online)
-                    let msgcontent = self.edt_msgSend.text!
-                    self.edt_msgSend.text! = ""
-                    self.doSend(online, msgtype: .text, attachment: msgcontent)
-                }else{
-                    //print("failedstate===>",online)
-                    //self.showToast("Network issue")
+                }*/
+                self.getPartnerOnlineStatus { (isSuccess, online) in
+                    if isSuccess{
+                        //print("successstate==>",online)
+                        let msgcontent = self.edt_msgSend.text!
+                        self.edt_msgSend.text! = ""
+                        self.doSend(online, msgtype: .text, attachment: msgcontent)
+                    }else{
+                        //print("failedstate===>",online)
+                        //self.showToast("Network issue")
+                    }
                 }
             }
         }
@@ -473,8 +529,10 @@ class MessageSendVC: UIViewController {
                             listObject["message"]     = "Sent gif"
                         }
                         listObject["sender_id"]     = partner_id
-                        listObject["sender_name"]    = self.partner_model.username
+                        listObject["sender_first_name"]    = self.partner_model.first_name
+                        listObject["sender_last_name"]    = self.partner_model.last_name
                         listObject["sender_photo"]  = self.partner_model.user_photo
+                        listObject["sender_birthday"]  = "\(self.partner_model.birthday ?? 0)"
                         listObject["time"]           = "\(timeNow)" as String
                         
                         FirebaseAPI.sendListUpdate(listObject, "u" + me_id, partnerid: "u" + partner_id){
@@ -491,8 +549,10 @@ class MessageSendVC: UIViewController {
                                     listObject1["message"]     = "Sent gif"
                                 }
                                 listObject1["sender_id"]       = me_id
-                                listObject1["sender_name"]     = thisuser.first_name! + " " + thisuser.last_name!
+                                listObject1["sender_first_name"]     = thisuser.first_name
+                                listObject1["sender_last_name"]     = thisuser.last_name
                                 listObject1["sender_photo"]    = thisuser.user_photo
+                                listObject1["sender_birthday"]    = "\(thisuser.birthday ?? 0)"
                                 listObject1["time"]            = "\(timeNow)" as String
                                
                                 /**if !online{
@@ -640,6 +700,28 @@ extension MessageSendVC: UITableViewDataSource, UITableViewDelegate{
             cell.entity = msgdataSource[indexPath.section]
             cell.btn_me.tag = indexPath.section
             cell.btn_you.tag = indexPath.section
+            cell.btn_me_handle = {() in
+                if let url = URL(string: self.msgdataSource[indexPath.section].image){
+                    KingfisherManager.shared.retrieveImage(with: url, options: nil, progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
+                        let controller = CPImageViewer()
+                        controller.image = image
+                        self.navigationController?.delegate = self.animator
+                        self.present(controller, animated: true, completion: nil)
+                    })
+                }
+            }
+            
+            cell.btn_you_handle = {() in
+                if let url = URL(string: self.msgdataSource[indexPath.section].image){
+                    KingfisherManager.shared.retrieveImage(with: url, options: nil, progressBlock: nil, completionHandler: { image, error, cacheType, imageURL in
+                        let controller = CPImageViewer()
+                        controller.image = image
+                        self.navigationController?.delegate = self.animator
+                        self.present(controller, animated: true, completion: nil)
+                    })
+                }
+            }
+            
             if self.msgdataSource[indexPath.section].me{
                 cell.uiv_me.isHidden = false
                 cell.uiv_you.isHidden = true
@@ -662,6 +744,7 @@ extension MessageSendVC: UITableViewDataSource, UITableViewDelegate{
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {

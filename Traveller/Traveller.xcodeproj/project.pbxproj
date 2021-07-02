@@ -13,6 +13,11 @@
 		0530E17E25DA5372008765F2 /* AllChatModel&Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0530E17D25DA5372008765F2 /* AllChatModel&Cell.swift */; };
 		0530E1A825DA79FB008765F2 /* UIView+Blur.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0530E1A725DA79FB008765F2 /* UIView+Blur.swift */; };
 		0530E1D325DA7B95008765F2 /* StatusModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0530E1D225DA7B95008765F2 /* StatusModel.swift */; };
+		053DA43D268D43D900B6FFC9 /* CPImageViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053DA438268D43D900B6FFC9 /* CPImageViewer.swift */; };
+		053DA43E268D43D900B6FFC9 /* CPImageViewerAnimationTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053DA439268D43D900B6FFC9 /* CPImageViewerAnimationTransition.swift */; };
+		053DA43F268D43D900B6FFC9 /* CPImageViewerAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053DA43A268D43D900B6FFC9 /* CPImageViewerAnimator.swift */; };
+		053DA440268D43D900B6FFC9 /* CPImageViewerInteractiveTransition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053DA43B268D43D900B6FFC9 /* CPImageViewerInteractiveTransition.swift */; };
+		053DA441268D43D900B6FFC9 /* CPImageViewerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 053DA43C268D43D900B6FFC9 /* CPImageViewerProtocol.swift */; };
 		05497C0525D5367F00C13F9D /* TabBarVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05497BFB25D5367F00C13F9D /* TabBarVC.swift */; };
 		05497C1125D5373F00C13F9D /* SearchVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05497C1025D5373F00C13F9D /* SearchVC.swift */; };
 		05497C1425D5375700C13F9D /* MyTripVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = 05497C1325D5375700C13F9D /* MyTripVC.swift */; };
@@ -80,6 +85,12 @@
 		0530E17D25DA5372008765F2 /* AllChatModel&Cell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "AllChatModel&Cell.swift"; sourceTree = "<group>"; };
 		0530E1A725DA79FB008765F2 /* UIView+Blur.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIView+Blur.swift"; sourceTree = "<group>"; };
 		0530E1D225DA7B95008765F2 /* StatusModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StatusModel.swift; sourceTree = "<group>"; };
+		053DA437268D43D900B6FFC9 /* CPImageViewer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CPImageViewer.h; sourceTree = "<group>"; };
+		053DA438268D43D900B6FFC9 /* CPImageViewer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CPImageViewer.swift; sourceTree = "<group>"; };
+		053DA439268D43D900B6FFC9 /* CPImageViewerAnimationTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CPImageViewerAnimationTransition.swift; sourceTree = "<group>"; };
+		053DA43A268D43D900B6FFC9 /* CPImageViewerAnimator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CPImageViewerAnimator.swift; sourceTree = "<group>"; };
+		053DA43B268D43D900B6FFC9 /* CPImageViewerInteractiveTransition.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CPImageViewerInteractiveTransition.swift; sourceTree = "<group>"; };
+		053DA43C268D43D900B6FFC9 /* CPImageViewerProtocol.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CPImageViewerProtocol.swift; sourceTree = "<group>"; };
 		05497BFB25D5367F00C13F9D /* TabBarVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarVC.swift; sourceTree = "<group>"; };
 		05497C1025D5373F00C13F9D /* SearchVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchVC.swift; sourceTree = "<group>"; };
 		05497C1325D5375700C13F9D /* MyTripVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTripVC.swift; sourceTree = "<group>"; };
@@ -155,6 +166,19 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		053DA436268D43D900B6FFC9 /* CPImageViewer */ = {
+			isa = PBXGroup;
+			children = (
+				053DA437268D43D900B6FFC9 /* CPImageViewer.h */,
+				053DA438268D43D900B6FFC9 /* CPImageViewer.swift */,
+				053DA439268D43D900B6FFC9 /* CPImageViewerAnimationTransition.swift */,
+				053DA43A268D43D900B6FFC9 /* CPImageViewerAnimator.swift */,
+				053DA43B268D43D900B6FFC9 /* CPImageViewerInteractiveTransition.swift */,
+				053DA43C268D43D900B6FFC9 /* CPImageViewerProtocol.swift */,
+			);
+			path = CPImageViewer;
+			sourceTree = "<group>";
+		};
 		05497BF125D5367F00C13F9D /* TabBarModule */ = {
 			isa = PBXGroup;
 			children = (
@@ -367,6 +391,7 @@
 		05FCAEB32620A7370062997F /* Vendor */ = {
 			isa = PBXGroup;
 			children = (
+				053DA436268D43D900B6FFC9 /* CPImageViewer */,
 				05FCAEB42620A7460062997F /* KAWebBrowser */,
 			);
 			path = Vendor;
@@ -538,9 +563,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				053DA43E268D43D900B6FFC9 /* CPImageViewerAnimationTransition.swift in Sources */,
 				057D718025D4D265001C4250 /* UIViewController+Extension.swift in Sources */,
 				0530E1D325DA7B95008765F2 /* StatusModel.swift in Sources */,
 				057D718D25D4D28E001C4250 /* Constants.swift in Sources */,
+				053DA43D268D43D900B6FFC9 /* CPImageViewer.swift in Sources */,
 				051ED88325DC47C400B34D08 /* EmailLoginVC.swift in Sources */,
 				057D718325D4D265001C4250 /* UITableViewCell+Extension.swift in Sources */,
 				057D71A725D4D2E1001C4250 /* SplashVC.swift in Sources */,
@@ -566,12 +593,14 @@
 				057D717F25D4D265001C4250 /* UIFont+Extension.swift in Sources */,
 				05497C0525D5367F00C13F9D /* TabBarVC.swift in Sources */,
 				057D717025D4D265001C4250 /* UIApplication+Extension.swift in Sources */,
+				053DA43F268D43D900B6FFC9 /* CPImageViewerAnimator.swift in Sources */,
 				057D716925D4D265001C4250 /* UIColor+Extension.swift in Sources */,
 				057D717525D4D265001C4250 /* UIImage+Extension.swift in Sources */,
 				057D71A425D4D2E1001C4250 /* LoginVC.swift in Sources */,
 				05FB121F25DA400F00A79F22 /* NewTripVC.swift in Sources */,
 				057D717425D4D265001C4250 /* NSNotification+Extension.swift in Sources */,
 				05497C1125D5373F00C13F9D /* SearchVC.swift in Sources */,
+				053DA441268D43D900B6FFC9 /* CPImageViewerProtocol.swift in Sources */,
 				057D717325D4D265001C4250 /* Array+Extension.swift in Sources */,
 				05497C1425D5375700C13F9D /* MyTripVC.swift in Sources */,
 				0530E17E25DA5372008765F2 /* AllChatModel&Cell.swift in Sources */,
@@ -593,6 +622,7 @@
 				055A06D325EF888F0093F413 /* MyTripDetail.swift in Sources */,
 				057D718425D4D265001C4250 /* DynamicHeightCollectionView.swift in Sources */,
 				057D717B25D4D265001C4250 /* Data+Extension.swift in Sources */,
+				053DA440268D43D900B6FFC9 /* CPImageViewerInteractiveTransition.swift in Sources */,
 				057D717A25D4D265001C4250 /* CommonUtils.swift in Sources */,
 				057D717625D4D265001C4250 /* UIImage+GIF.swift in Sources */,
 				05FCAEB72620A7460062997F /* KAWebBrowser.swift in Sources */,

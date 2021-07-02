@@ -141,7 +141,7 @@ class ProfileVC: BaseVC {
         edt_firstname.text = thisuser.first_name
         edt_lastname.text = thisuser.last_name
         edt_email.text = thisuser.user_email
-        edt_email.textColor = .darkGray
+        edt_email.textColor = .lightGray
         edt_email.isUserInteractionEnabled = false
         if thisuser.birthday != 0{
             edt_birthday.text = getStrDate("\(thisuser.birthday ?? Int(NSDate().timeIntervalSince1970 * 1000))", format: "MM/dd/yyyy")

@@ -18,6 +18,12 @@ class EmailLoginVC: BaseVC, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setUI()
+        //loadLayout()
+    }
+    
+    func loadLayout() {
+        self.edt_email.text = "topdevme@gmail.com"
+        self.edt_password.text = "123"
     }
     
     func setUI() {

@@ -17,11 +17,11 @@ class FirebaseAPI {
      //MARK: - Set/remove Add/change observer
     static func setMessageListener(_ roomId: String, handler:@escaping (_ msg: ChatModel)->()) -> UInt {
         return ref.child(MESSAGE).child(roomId).observe(.childAdded) { (snapshot, error) in
-
+            let path = snapshot.key
             let childref = snapshot.value as? NSDictionary
             //print(childref)
-            if let childRef = childref {
-                let msg = parseMsg(childRef)
+            if let childRef = childref{
+                let msg = parseMsg(key: path, snapshot: childRef)
                 handler(msg)
             }
         }
@@ -58,23 +58,33 @@ class FirebaseAPI {
         return status
     }
     
-    static func parseMsg(_ snapshot: NSDictionary) -> ChatModel {
+    static func parseMsg(key: String, snapshot: NSDictionary) -> ChatModel {
         let message = ChatModel()
-        //print(snapshot)
-        
-        message.image = snapshot["image"] as! String
-        message.msgContent = snapshot["message"] as! String
-        message.name = snapshot["name"] as! String
-        message.photo = snapshot["photo"] as! String
-        message.sender_id = snapshot["sender_id"] as! String
-       
+        message.msg_id = key
+        if let image = snapshot["image"] as? String{
+            message.image = image
+        }
+        if let msgContent = snapshot["message"] as? String{
+            message.msgContent = msgContent
+        }
+        if let name = snapshot["name"] as? String{
+            message.name = name
+        }
+        if let photo = snapshot["photo"] as? String{
+            message.photo = photo
+        }
+        if let sender_id = snapshot["sender_id"] as? String{
+            message.sender_id = sender_id
+        }
         if "\(thisuser.user_id ?? 0)" == message.sender_id{
             message.me = true
         }
         else{
             message.me = false
         }
-        message.timestamp = snapshot["time"] as! String
+        if let timestamp = snapshot["time"] as? String{
+            message.timestamp = timestamp
+        }
         return message
     }
     
@@ -98,8 +108,8 @@ class FirebaseAPI {
     }
     
     static func parseUserList(_ snapshot: NSDictionary) -> AllChatModel? {
-        if  let id = snapshot["id"] as? String,let userName = snapshot["sender_name"] as? String, let sender_photo = snapshot["sender_photo"] as? String, let msgtime = snapshot["time"] as? String, let content = snapshot["message"] as? String{
-            let partner = AllChatModel(id: id.toInt() ?? 0, username: userName, userAvatar: sender_photo, msgTime: msgtime, content: content)
+        if  let id = snapshot["id"] as? String,let first_name = snapshot["sender_first_name"] as? String,let last_name = snapshot["sender_last_name"] as? String, let sender_photo = snapshot["sender_photo"] as? String, let msgtime = snapshot["time"] as? String, let content = snapshot["message"] as? String, let birthday = snapshot["sender_birthday"] as? String{
+            let partner = AllChatModel(id: id.toInt() ?? 0, first_name: first_name, last_name: last_name, userAvatar: sender_photo, msgTime: msgtime, content: content, birthday: birthday.toInt() ?? 0)
             return partner
         }else{
             return nil
@@ -133,7 +143,7 @@ class FirebaseAPI {
         }
     }
     
-    static func detectChatRoomValueChanage(userRoomid : String, handler:@escaping (_ msg: ChatModel)->()) -> UInt {
+    /**static func detectChatRoomValueChanage(userRoomid : String, handler:@escaping (_ msg: ChatModel)->()) -> UInt {
         return ref.child(MESSAGE).child(userRoomid).observe(.childChanged) { (snapshot, error) in
 
             let childref = snapshot.value as? NSDictionary
@@ -145,7 +155,7 @@ class FirebaseAPI {
                 handler(ChatModel())
             }
         }
-    }
+    }*/
     
     static func removeChangeRoomObserver(_ roomId: String, _ handle : UInt) {
         ref.child(MESSAGE).child(roomId).removeObserver(withHandle: handle)

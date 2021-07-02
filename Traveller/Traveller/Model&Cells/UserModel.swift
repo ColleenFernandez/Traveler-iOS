@@ -53,10 +53,12 @@ class UserModel: NSObject {
         self.phone_number = phone_number
     }
     
-    init(user_id: Int, user_name: String, user_photo: String){
+    init(user_id: Int, first_name: String,last_name: String, user_photo: String, user_birthday: Int){
         self.user_id = user_id
-        self.username = user_name
+        self.first_name = first_name
+        self.last_name = last_name
         self.user_photo = user_photo
+        self.birthday = user_birthday
     }
     
     init(_ json: JSON){

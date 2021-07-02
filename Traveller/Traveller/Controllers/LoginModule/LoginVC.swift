@@ -29,6 +29,7 @@ class LoginVC: BaseVC{
     
     @IBOutlet weak var btn_eng: DLRadioButton!
     @IBOutlet weak var btn_rus: DLRadioButton!
+    @IBOutlet weak var btn_terms: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -71,13 +72,14 @@ class LoginVC: BaseVC{
     
     func setLanguageUI() {
         if language.language == Languages.eng{
-            self.lbl_terms.text = "By clicking “login” you agree with our terms."
+            self.lbl_terms.text = "By clicking “login” you agree with our "
             self.btn_facebook.setTitle("Login with Facebook", for: .normal)
             self.btn_apple.setTitle("Login with Apple", for: .normal)
             self.btn_google.setTitle("Login with Google", for: .normal)
             self.btn_email.setTitle("Login with Email", for: .normal)
             self.btn_guest.setTitle("Continue as guest", for: .normal)
             self.lbl_signup.text = "Don't you have an account yet?\nSign up here"
+            self.btn_terms.setTitle("terms", for: .normal)
         }else{
             self.lbl_terms.text = RUS.BY_CLICKING_TERMS
             self.btn_facebook.setTitle(RUS.LOGIN_WITH_FACEBOOK, for: .normal)
@@ -86,6 +88,7 @@ class LoginVC: BaseVC{
             self.btn_email.setTitle(RUS.LOGIN_WITH_EMAIL, for: .normal)
             self.btn_guest.setTitle(RUS.CONTINUE_AS_GUEST, for: .normal)
             self.lbl_signup.text = RUS.DIDN_T_HAVE_AN_ACCOUNT_YET + "\n" + RUS.SIGN_UP_HERE
+            self.btn_terms.setTitle("термины", for: .normal)
         }
     }
     
@@ -216,15 +219,14 @@ extension LoginVC : GIDSignInDelegate {
             guard let user = user else {return}
             //let socialId = user.userID!                  // For client-side use only!
              // Safe to send to the server
-            let fullName = user.profile.name!
-            var firstname = ""
-            var lastname = ""
-            firstname = String(fullName.split(separator: " ").first ?? "")
-            lastname = String(fullName.split(separator: " ").last ?? "")
+            
+            let firstname = user.profile.name
+            let lastname = user.profile.familyName
+            
             let email = user.profile.email!
             let photoUrlString = user.profile.imageURL(withDimension: 300)!.description
             self.showLoadingView(vc: self)
-            ApiManager.socialLogin(email: email, first_name: firstname, last_name: lastname, user_photo: photoUrlString, login_type: .google, social_id: "") { (isSuccess, data) in
+            ApiManager.socialLogin(email: email, first_name: firstname ?? "", last_name: lastname ?? "", user_photo: photoUrlString, login_type: .google, social_id: "") { (isSuccess, data) in
                 self.hideLoadingView()
                 if isSuccess{
                     self.gotoTabControllerWithIndex(0)

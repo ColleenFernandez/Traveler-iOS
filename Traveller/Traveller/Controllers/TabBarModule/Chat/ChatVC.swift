@@ -26,7 +26,6 @@ class ChatVC: BaseVC {
         layout.minimumInteritemSpacing = 0
         layout.minimumLineSpacing = 0
         self.col_allChats.collectionViewLayout = layout
-        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -150,6 +149,15 @@ extension ChatVC : UICollectionViewDelegate, UICollectionViewDataSource{
         cell.btn_spaceBtn.tag = indexPath.row
         cell.btn_delete.tag = indexPath.row
         cell.btn_decline.tag = indexPath.row
+        cell.avatarAction = {() in
+            // goto rating vc
+            let tovc = self.createVC("RateUserVC") as! RateUserVC
+            let user = self.ds_allChats[indexPath.row]
+            let usermodel = UserModel(user_id: user.id ?? 0, first_name: user.first_name ?? "", last_name: user.last_name ?? "", user_photo: user.userAvatar ?? "", user_birthday: user.birthday ?? 0)
+            tovc.rate_user = usermodel
+            tovc.modalPresentationStyle = .fullScreen
+            self.navigationController?.pushViewController(tovc, animated: true)
+        }
         return cell
     }
     
@@ -165,7 +173,7 @@ extension ChatVC : UICollectionViewDelegate, UICollectionViewDataSource{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let partner = self.ds_allChats[indexPath.row]
         let tovc = self.createVC("MessageSendVC") as! MessageSendVC
-        tovc.partner_model = UserModel(user_id: partner.id!, user_name: partner.userName ?? "", user_photo: partner.userAvatar ?? "")
+        tovc.partner_model = UserModel(user_id: partner.id!, first_name: partner.first_name ?? "", last_name: partner.last_name ?? "", user_photo: partner.userAvatar ?? "", user_birthday: partner.birthday ?? 0)
         let navigationcontroller = UINavigationController.init(rootViewController: tovc)
         navigationcontroller.modalPresentationStyle = .fullScreen
         self.present(navigationcontroller, animated: false, completion: nil)

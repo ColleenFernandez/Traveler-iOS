@@ -268,7 +268,7 @@ class NewTripVC: BaseVC {
                         if  Int(datee.timeIntervalSince1970) * 1000 - Int(NSDate().timeIntervalSince1970 * 1000) <= Constants.ONE_HOUR_TIMESTAMP - Constants.ONE_MIN_TIMESTAMP{
                             
                             self.edt_time.text = ""
-                            self.showAlerMessage(message: language.language == .eng ? "Please select arrival time" : RUS.PLEASE_SELECT_ARRIVAL_TIME)
+                            self.showAlerMessage(message: language.language == .eng ? "Please select correct arrival time" : "пожалуйста, выберите правильную дату прибытия")
                             return
                         }else{
                             self.start_timestamp = Int(datee.timeIntervalSince1970) * 1000

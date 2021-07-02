@@ -12,28 +12,34 @@ import SwiftyJSON
 class AllChatModel: NSObject{
     
     var id: Int?
-    var userName: String?
+    var first_name: String?
+    var last_name: String?
     var userAvatar: String?
     var msgTime: String?
     var content: String?
+    var birthday: Int?
     var showOverlay: Bool = false
     
     override init() {
         self.id = -1
-        self.userName = ""
+        self.first_name = ""
+        self.last_name = ""
         self.userAvatar = ""
         self.msgTime = ""
         self.content = ""
         self.showOverlay = false
+        self.birthday = 0
     }
     
-    init(id: Int, username : String, userAvatar : String, msgTime: String, content: String, showOverlay: Bool = false) {
+    init(id: Int, first_name : String,last_name : String, userAvatar : String, msgTime: String, content: String, showOverlay: Bool = false, birthday: Int) {
         self.id = id
-        self.userName = username
+        self.first_name = first_name
+        self.last_name = last_name
         self.userAvatar = userAvatar
         self.msgTime = getStrDateshort(msgTime)
         self.showOverlay = showOverlay
         self.content = content
+        self.birthday = birthday
     }
 }
 
@@ -51,12 +57,12 @@ class AllChatCell: UICollectionViewCell {
     //@IBOutlet weak var uiv_colorOverlay: UIView!
     //@IBOutlet weak var uiv_blur: UIView!
     @IBOutlet weak var uiv_blur: CustomBlurView!
-    
+    var avatarAction: (() -> ())?
     var entity: AllChatModel!{
         didSet{
             let url = URL(string: entity.userAvatar ?? "")
             imv_profile.kf.setImage(with: url,placeholder: UIImage.init(named: "placeholder"))
-            self.lbl_userName.text = entity.userName
+            self.lbl_userName.text = entity.first_name! + " " + entity.last_name!
            
             self.lbl_msgTIme.text = entity.msgTime
             self.lbl_content.text = entity.content
@@ -65,6 +71,10 @@ class AllChatCell: UICollectionViewCell {
             self.uiv_overlay.isHidden = !entity.showOverlay
             uiv_blur.visualEffectView.blurRadius = 3
         }
+    }
+    
+    @IBAction func avatarBtnClicked(_ sender: Any) {
+        self.avatarAction?()
     }
 }
 

@@ -17,8 +17,9 @@ class MyTripDetail: BaseVC {
     @IBOutlet weak var lbl_from: UILabel!
     @IBOutlet weak var lbl_to: UILabel!
     @IBOutlet weak var lbl_servicetime: UILabel!
-    @IBOutlet weak var lbl_weight: UILabel!
-    @IBOutlet weak var lbl_price: UILabel!
+    
+    @IBOutlet weak var edt_weight: UITextField!
+    @IBOutlet weak var edt_price: UITextField!
     
     @IBOutlet weak var cus_document: BEMCheckBox!
     @IBOutlet weak var cus_medicine: BEMCheckBox!
@@ -49,6 +50,10 @@ class MyTripDetail: BaseVC {
     @IBOutlet weak var lbl_icanbring: UILabel!
     @IBOutlet weak var lbl_travelnotes: UILabel!
     
+    
+    @IBOutlet weak var btn_updatetrip: dropShadowDarkButton!
+    var check_boxs = [BEMCheckBox]()
+    
     var one: TravelModel?
     
     override func viewWillAppear(_ animated: Bool) {
@@ -68,11 +73,13 @@ class MyTripDetail: BaseVC {
             }
             self.lbl_username.text = one.usermodel?.first_name
             self.lbl_servicetime.text = getWeekAndDateTimeFromTmp(Int64(one.travel_time ?? Int(NSDate().timeIntervalSince1970 * 1000)))
-            self.lbl_weight.text = "\(one.weight ?? 0.0)"
-            self.lbl_price.text = "\(one.price ?? 0)"
+            self.setEdtPlaceholder(self.edt_weight, placeholderText: language.language == .eng ? "Please input weight" : RUS.PLEASE_INPUT_WEIGHT, placeColor: .lightGray, padding: .left(4))
+            self.setEdtPlaceholder(self.edt_price, placeholderText: language.language == .eng ? "Please input price" : RUS.PLEASE_INPUT_PRICE, placeColor: .lightGray, padding: .left(4))
+            self.edt_weight.text = "\(one.weight ?? 0.0)"
+            self.edt_price.text = "\(one.price ?? 0)"
             self.cus_rating.rating = Double(one.usermodel?.rating ?? 0.0)
             
-            let check_boxs: [BEMCheckBox] = [cus_document, cus_medicine, cus_makeup,cus_money, cus_food, cus_mobile,  cus_laptop, cus_electroinics, cus_books, cus_toys,   cus_clothes,cus_shoes]
+            check_boxs = [cus_document, cus_medicine, cus_makeup,cus_money, cus_food, cus_mobile,  cus_laptop, cus_electroinics, cus_books, cus_toys,   cus_clothes,cus_shoes]
             for one in check_boxs{
                 setCheckBox(one, checked: false)
             }
@@ -108,7 +115,9 @@ class MyTripDetail: BaseVC {
         self.lbl_travelnotes.text = language.language == .eng ? "Travel Notes" : RUS.TRAVEL_NOTES
         
         self.navigationItem.title = language.language == .eng ? "My Trip Details" : "Детали моей поездки"
+        self.btn_updatetrip.setTitle(language.language == .eng ? "Update Trip" : "обновить поездку", for: .normal)
         self.addLeftButton4NavBar()
+        self.addRightButton4NavBar()
     }
     
     func addLeftButton4NavBar() {
@@ -128,6 +137,41 @@ class MyTripDetail: BaseVC {
         self.navigationController?.popViewController(animated: true)
     }
     
+    func addRightButton4NavBar() {
+        // if needed i will add
+        let btn_back = UIButton(type: .custom)
+        btn_back.setImage(UIImage (named: "delete")!.withRenderingMode(.alwaysTemplate), for: .normal)
+        btn_back.addTarget(self, action: #selector(addTappedRightBtn), for: .touchUpInside)
+        btn_back.imageEdgeInsets = UIEdgeInsets(top: 5, left: 5, bottom: 5, right: 5)
+        btn_back.tintColor = UIColor.white
+        let barButtonItemBack = UIBarButtonItem(customView: btn_back)
+        barButtonItemBack.customView?.widthAnchor.constraint(equalToConstant: 35).isActive = true
+        barButtonItemBack.customView?.heightAnchor.constraint(equalToConstant: 35).isActive = true
+        self.navigationItem.rightBarButtonItem = barButtonItemBack
+    }
+    
+    @objc func addTappedRightBtn() {
+        // show delete confirm dialog
+        
+        let alert = UIAlertController(title: language.language == .eng ? "Delete travel" : "Удалить путешествие", message: language.language == .eng ? "Do you want to delete this travel?" : "Вы хотите удалить это путешествие?", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: language.language == .eng ? "OK" : "OK", style: .default, handler: { action in
+            if let one = self.one{
+                self.showLoadingView(vc: self)
+                ApiManager.deleteMyTrips(travel_id: one.travel_id) { (isSuccess, data) in
+                    self.hideLoadingView()
+                    if isSuccess{
+                        self.navigationController?.popViewController(animated: true)
+                    }else{
+                        self.showToast("Network issue")
+                    }
+                }
+            }
+        }))
+        alert.addAction(UIAlertAction(title: language.language == .eng ? "Cancel" : "отменить", style: .default, handler: { action in
+        }))
+        
+        self.present(alert, animated: true, completion: nil)
+    }
     
     func getCheckedStatus( _ item: String) -> (Bool, Int) {
         for i in 0 ..< Constants.items.count{
@@ -145,8 +189,43 @@ class MyTripDetail: BaseVC {
         checkbox.boxType = .square
         checkbox.onAnimationType = .oneStroke
         checkbox.offAnimationType = .bounce
-        checkbox.isUserInteractionEnabled = false
+        //checkbox.isUserInteractionEnabled = false
         checkbox.on = checked
+    }
+    
+    @IBAction func upateTripBtnClicked(_ sender: Any) {
+        if let one = self.one{
+            let weight = edt_weight.text ?? ""
+            let price = edt_price.text ?? ""
+            var des = txv_from_traveler.text ?? ""
+            
+            var items = [String]()
+            for i in 0 ..< check_boxs.count{
+                if check_boxs[i].on{
+                    items.append(Constants.items[i])
+                }
+            }
+            if weight.isEmpty{
+                self.showAlerMessage(message: language.language == .eng ? "Please input weight." : RUS.PLEASE_INPUT_WEIGHT)
+                return
+            }
+            if price.isEmpty{
+                self.showAlerMessage(message: language.language == .eng ? "Please input price." : RUS.PLEASE_INPUT_PRICE)
+                return
+            }
+            if items.count == 0{
+                self.showAlerMessage(message: language.language == .eng ? "Please selct bring items." : RUS.PLEASE_INPUT_BRING_ITEMS)
+                return
+            }else{
+                self.showLoadingView(vc: self)
+                ApiManager.updateMyTrips(travel_id: one.travel_id, weight: weight.toFloat() ?? 0.0, price: price.toInt() ?? 0, items: items.joined(separator: ","), des: des) { (isSuccess, data) in
+                    self.hideLoadingView()
+                    if isSuccess{
+                        self.navigationController?.popViewController(animated: true)
+                    }
+                }
+            }
+        }
     }
 }
 

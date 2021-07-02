@@ -21,6 +21,7 @@ class RateUserVC: BaseVC {
     @IBOutlet weak var txv_reviewcontent: UITextView!
     @IBOutlet weak var uiv_back: UIView!
     @IBOutlet weak var uiv_modal: UIView!
+    @IBOutlet weak var btn_rate: dropShadowDarkButton!
     var review_id: Int?
     var reviews = [ReviewModel]()
     let cellSpacingHeight: CGFloat = 0 // cell line spacing must use section instead of row
@@ -81,6 +82,7 @@ class RateUserVC: BaseVC {
             self.imv_user.kf.setImage(with: URL(string: user.user_photo ?? ""))
             self.lbl_username.text = user.first_name! + " " + user.last_name!
             self.lbl_usercontent.text = getAgeFromString(getStrDate("\(user.birthday ?? 0)"))
+            self.btn_rate.setTitle(language.language == .eng ? "Rate User" : "оценить пользователя", for: .normal)
         }
     }
     

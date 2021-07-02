@@ -5,7 +5,7 @@ public let PLACE_API_KEY = "AIzaSyD5eBj9SeVQLGAqtG2Z4QW3sxAKIpI7ve4"
 
 
 struct RUS {
-    static let BY_CLICKING_TERMS                                           = "Регистрируясь вы принимаете наши условия использования приложения"
+    static let BY_CLICKING_TERMS                                           = "нажимая 'Войти', вы соглашаетесь с Нашими "
     static let LOGIN_WITH_FACEBOOK                                         = "Зарегистрироваться используя Facebook"
     static let LOGIN_WITH_APPLE                                            = "Зарегистрироваться используя Apple"
     static let LOGIN_WITH_GOOGLE                                           = "Зарегистрироваться используя Google"

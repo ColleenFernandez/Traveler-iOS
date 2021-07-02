@@ -180,8 +180,10 @@ class TripDetailVC: BaseVC {
                             listObject["id"]   = partner_id
                             // MARK: for list view for my list object - - listobject
                             listObject["message"]     = msg
-                            listObject["sender_name"]    = one.usermodel!.first_name! + " " +  one.usermodel!.last_name!
+                            listObject["sender_first_name"]    = one.usermodel?.first_name
+                            listObject["sender_last_name"]    = one.usermodel?.last_name
                             listObject["sender_photo"]  = one.usermodel!.user_photo
+                            listObject["sender_birthday"]  = "\(one.usermodel?.birthday ?? 0)"
                             listObject["time"]           = "\(timeNow)" as String
                             
                             
@@ -192,7 +194,9 @@ class TripDetailVC: BaseVC {
                                     // MARK:  for list view for partner's list object - listobject1
                                     listObject1["id"]              = me_id
                                     listObject1["message"]          = msg
-                                    listObject1["sender_name"]     = thisuser.first_name! + " " + thisuser.last_name!
+                                    listObject1["sender_first_name"]     = thisuser.first_name
+                                    listObject1["sender_last_name"]     = thisuser.last_name
+                                    listObject1["sender_birthday"]    = "\(thisuser.birthday ?? 0)"
                                     listObject1["sender_photo"]    = thisuser.user_photo
                                     listObject1["time"]            = "\(timeNow)" as String
                                    

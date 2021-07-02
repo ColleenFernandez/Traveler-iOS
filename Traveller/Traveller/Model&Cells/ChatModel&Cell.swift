@@ -13,7 +13,7 @@ import Kingfisher
 //import SwiftyGif
 
 class ChatModel {
-    
+    var msg_id: String
     var me : Bool
     var timestamp : String
     var msgContent : String
@@ -23,7 +23,7 @@ class ChatModel {
     var sender_id : String
     
     init(me : Bool,timestamp : String, msgContent : String, image: String, photo : String, name: String , sender_id : String) {
-        
+        self.msg_id = ""
         self.timestamp = timestamp
         self.msgContent = msgContent
         self.me = me
@@ -32,8 +32,12 @@ class ChatModel {
         self.name = name
         self.sender_id = sender_id
     }
-    
+//    init(_ one: Dictionary) {
+//        
+//    }
+//    
     init() {
+        self.msg_id = ""
         self.timestamp = ""
         self.msgContent = ""
         self.me = true
@@ -218,6 +222,8 @@ class chatImageCell: UITableViewCell {
     @IBOutlet weak var btn_you: UIButton!
     @IBOutlet weak var imv_partner: UIImageView!
     @IBOutlet weak var lbl_readReceipt: UILabel!
+    var btn_me_handle: (() -> ())?
+    var btn_you_handle: (() -> ())?
     
     var entity : ChatModel!{
         didSet {
@@ -275,6 +281,13 @@ class chatImageCell: UITableViewCell {
         } else {
             // Fallback on earlier versions
         }
+    }
+    @IBAction func meBtnclicked(_ sender: Any) {
+        self.btn_me_handle?()
+    }
+    
+    @IBAction func youBtnclicked(_ sender: Any) {
+        self.btn_you_handle?()
     }
 }
 

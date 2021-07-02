@@ -306,6 +306,45 @@ class ApiManager {
         }
     }
     
+    class func deleteMyTrips(travel_id: Int, completion :  @escaping (_ success: Bool, _ response : Any?) -> ()) {
+        let params = ["travel_id": travel_id, "user_id" : thisuser.user_id ?? -1] as [String : Any]
+        Alamofire.request(SERVER_URL + "deleteMyTrips", method:.post, parameters:params)
+        .responseJSON { response in
+            switch response.result {
+                case .failure:
+                completion(false, nil)
+                case .success(let data):
+                let dict = JSON(data)
+                let status = dict[PARAMS.MESSAGE].stringValue
+                if status == SUCCESS {
+                    completion(true, dict)
+                } else{
+                    completion(false, status)
+                }
+            }
+        }
+    }
+    
+    class func updateMyTrips(travel_id: Int, weight: Float, price: Int, items: String, des: String, completion :  @escaping (_ success: Bool, _ response : Any?) -> ()) {
+        let params = ["travel_id": travel_id, PARAMS.USER_ID: thisuser.user_id ?? -1, PARAMS.WEIGHT: weight, PARAMS.PRICE: price, PARAMS.ITEMS: items, PARAMS.DES: des ] as [String : Any]
+        Alamofire.request(SERVER_URL + "updateMyTrips", method:.post, parameters:params)
+        .responseJSON { response in
+            switch response.result {
+                case .failure:
+                completion(false, nil)
+                case .success(let data):
+                let dict = JSON(data)
+                let status = dict[PARAMS.MESSAGE].stringValue
+                if status == SUCCESS {
+                    completion(true, dict)
+                } else{
+                    completion(false, status)
+                }
+            }
+        }
+    }
+    
+    
     class func createTravel(travel_time: Int, weight: Float, price: Int, items: String, des: String, from_location: String,to_location: String,from_id: String,to_id: String,from_country: String,to_country: String,  completion :  @escaping (_ success: Bool, _ response : Any?) -> ()) {
         let params = [PARAMS.USER_ID: thisuser.user_id ?? -1, PARAMS.TRAVEL_TIME: travel_time, PARAMS.WEIGHT: weight, PARAMS.PRICE: price, PARAMS.ITEMS: items, PARAMS.DES: des ,PARAMS.FROM_LOCATION : from_location, PARAMS.TO_LOCATION: to_location, "from_id":from_id, "to_id": to_id, "from_country" : from_country, "to_country": to_country] as [String : Any]
         Alamofire.request(SERVER_URL + "createTravel", method:.post, parameters:params)

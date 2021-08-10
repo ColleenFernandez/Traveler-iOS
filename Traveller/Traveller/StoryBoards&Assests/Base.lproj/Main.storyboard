@@ -2229,7 +2229,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PdF-RF-QTl" customClass="CosmosView" customModule="Cosmos">
-                                                    <rect key="frame" x="20" y="37" width="120" height="143.33333333333334"/>
+                                                    <rect key="frame" x="20" y="37" width="120" height="163.33333333333334"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="totalStars">
@@ -2256,19 +2256,19 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Er0-iA-y0E">
-                                                    <rect key="frame" x="160" y="101.66666666666667" width="31" height="14.333333333333329"/>
+                                                    <rect key="frame" x="160" y="111.66666666666667" width="31" height="14.333333333333329"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="can you hear me?" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KYY-3x-roY">
-                                                    <rect key="frame" x="20" y="125.99999999999999" width="374" height="14.333333333333329"/>
+                                                    <rect key="frame" x="20" y="136" width="374" height="14.333333333333343"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="dsdsdsdfdfdffdfdfdfd" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BgS-XA-ciZ" customClass="PaddingLabel" customModule="Traveller" customModuleProvider="target">
-                                                    <rect key="frame" x="20" y="150.33333333333334" width="374" height="24.333333333333343"/>
+                                                    <rect key="frame" x="20" y="160.33333333333334" width="374" height="14.333333333333343"/>
                                                     <color key="backgroundColor" red="0.72135605526457158" green="0.90975492294520544" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="tintColor" name="color_Primary"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -6609,7 +6609,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <view userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="iOV-3U-M6z" customClass="CosmosView" customModule="Cosmos">
-                                                    <rect key="frame" x="20" y="37" width="120" height="143.33333333333334"/>
+                                                    <rect key="frame" x="20" y="37" width="120" height="163.33333333333334"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <userDefinedRuntimeAttributes>
                                                         <userDefinedRuntimeAttribute type="number" keyPath="totalStars">
@@ -6636,19 +6636,19 @@
                                                     </userDefinedRuntimeAttributes>
                                                 </view>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="auZ-8K-kNG">
-                                                    <rect key="frame" x="160" y="101.66666666666667" width="31" height="14.333333333333329"/>
+                                                    <rect key="frame" x="160" y="111.66666666666667" width="31" height="14.333333333333329"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="252" text="can you hear me?" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SDB-qV-gzf">
-                                                    <rect key="frame" x="20" y="125.99999999999999" width="374" height="14.333333333333329"/>
+                                                    <rect key="frame" x="20" y="136" width="374" height="14.333333333333343"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                     <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="dsdsdsdfdfdffdfdfdfd" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="6Hf-rT-j1o" customClass="PaddingLabel" customModule="Traveller" customModuleProvider="target">
-                                                    <rect key="frame" x="20" y="150.33333333333334" width="374" height="24.333333333333343"/>
+                                                    <rect key="frame" x="20" y="160.33333333333334" width="374" height="14.333333333333343"/>
                                                     <color key="backgroundColor" red="0.72135605530000002" green="0.90975492290000004" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="tintColor" name="color_Primary"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -8372,7 +8372,7 @@
             <size key="intrinsicContentSize" width="14" height="14"/>
         </designable>
         <designable name="6Hf-rT-j1o">
-            <size key="intrinsicContentSize" width="135.66666666666669" height="24.333333333333336"/>
+            <size key="intrinsicContentSize" width="121.66666666666667" height="14.333333333333334"/>
         </designable>
         <designable name="73s-bj-8Dw">
             <size key="intrinsicContentSize" width="14" height="14"/>
@@ -8387,7 +8387,7 @@
             <size key="intrinsicContentSize" width="14" height="14"/>
         </designable>
         <designable name="BgS-XA-ciZ">
-            <size key="intrinsicContentSize" width="135.66666666666669" height="24.333333333333336"/>
+            <size key="intrinsicContentSize" width="121.66666666666667" height="14.333333333333334"/>
         </designable>
         <designable name="GI1-ZJ-RQg">
             <size key="intrinsicContentSize" width="120" height="20"/>
